@@ -1,12 +1,13 @@
 import app from './app';
 import mongoose from 'mongoose';
+import config from './config';
 
 async function main() {
   try {
-    await mongoose.connect("mongodb+srv://arfan19:QSY86AS.at37nc9@cluster0.zfaaptg.mongodb.net/TasteTrail?appName=Cluster0");
+    await mongoose.connect(config.db_Url as string);
 
-    app.listen(5000, () => {
-      console.log(`Example app listening on port ${5000}`);
+    app.listen(config.port, () => {
+      console.log(`Example app listening on port ${config.port}`);
     });
   } catch (error) {
     console.log(error);
