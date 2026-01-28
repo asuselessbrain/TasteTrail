@@ -7,6 +7,12 @@ const createCategory = async (data: ICategory) => {
     return await category.save()
 }
 
+const getAllCategories = async (options: Record<string, any>) => {
+    const categories = await Category.find();
+    return categories;
+}
+
 export const categoryServices = {
     createCategory,
+    getAllCategories
 };
