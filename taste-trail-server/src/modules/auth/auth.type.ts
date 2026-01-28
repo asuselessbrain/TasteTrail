@@ -1,3 +1,5 @@
+import { USER_ROLE } from "./user.contant";
+
 export type IUser = {
   fullName: string;
   email: string;
@@ -5,3 +7,6 @@ export type IUser = {
   password: string;
   role?: 'admin' | 'user'
 };
+
+export type TUserRole = keyof typeof USER_ROLE;
+
