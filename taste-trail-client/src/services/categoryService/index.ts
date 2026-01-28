@@ -55,3 +55,17 @@ export const deleteCategory = async (id: string) => {
         throw error
     }
 }
+
+export const getAllCategoriesForFiltering = async () => {
+    try {
+        const res = await baseApi('/categories/for-filtering', {
+            method: 'GET',
+            next: {
+                tags: ['categories']
+            }
+        })
+        return res
+    } catch (error) {
+        throw error
+    }
+}

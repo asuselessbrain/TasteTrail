@@ -5,6 +5,7 @@ import authRouter from './modules/auth/auth.router';
 import { globalErrorHandlear } from './globalErrorHandlear/globalErrorHandlear';
 import { categoryRoutes } from './modules/category/category.route';
 import { cuisineRoutes } from './modules/cuisine/cuisine.route';
+import { recipeRoutes } from './modules/recipe/recipe.route';
 const app = express();
 
 app.use(express.json());
@@ -14,6 +15,7 @@ app.use(cors({ origin: ["http://localhost:3000"], credentials: true, }))
 app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/categories', categoryRoutes)
 app.use('/api/v1/cuisines', cuisineRoutes)
+app.use('/api/v1/recipes', recipeRoutes)
 
 app.get('/', (req: Request, res: Response) => {
     res.json({

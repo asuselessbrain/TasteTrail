@@ -71,6 +71,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Manage Cuisines",
       url: "/admin/manage-cuisine",
       icon: GalleryVerticalEnd
+    },
+    {
+      title: "Manage Recipes",
+      url: "/admin/manage-recipe",
+      icon: BookOpen
     }
   ]
 

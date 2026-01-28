@@ -55,3 +55,17 @@ export const deleteCuisine = async (id: string) => {
         throw error
     }
 }
+
+export const getAllCuisinesForFiltering = async () => {
+    try {
+        const res = await baseApi('/cuisines/for-filtering', {
+            method: 'GET',
+            next: {
+                tags: ['cuisines']
+            }
+        })
+        return res
+    } catch (error) {
+        throw error
+    }
+}

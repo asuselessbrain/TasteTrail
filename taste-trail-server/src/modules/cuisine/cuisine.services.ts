@@ -34,9 +34,15 @@ const deleteCuisine = async (id: string) => {
     return deleteCuisine
 }
 
+const getAllCuisinesForFiltering = async () => {
+    const cuisines = await Cuisine.find()
+    return cuisines;
+}
+
 export const cuisineServices = {
     createCuisine,
     getAllCuisines,
     updateCuisine,
-    deleteCuisine
+    deleteCuisine,
+    getAllCuisinesForFiltering
 };

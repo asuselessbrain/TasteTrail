@@ -1,4 +1,4 @@
-import { Model } from "mongoose";
+import { Model, PopulateOptions, Query } from "mongoose";
 
 interface QueryOptions {
     filters?: Record<string, any>;
@@ -8,10 +8,11 @@ interface QueryOptions {
     sortOrder?: 'asc' | 'desc';
     page?: number;
     limit?: number;
+    populate?: string | PopulateOptions | (string | PopulateOptions)[];
 }
 
 export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) => {
-    const { filters = {}, search, searchFields = [], sortBy = "createdAt", sortOrder = "desc", page = 1, limit = 10 } = options
+    const { filters = {}, search, searchFields = [], sortBy = "createdAt", sortOrder = "desc", page = 1, limit = 10, populate } = options
 
     let query = { ...filters }
 
@@ -23,7 +24,18 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
 
     const total = await model.countDocuments(query)
 
-    const result = await model.find(query).sort({ [sortBy]: sortOrder === 'asc' ? 1 : -1 }).skip((page - 1) * limit).limit(limit)
+    let mongoQuery: Query<T[], T> = model
+        .find(query)
+        .sort({ [sortBy]: sortOrder === "asc" ? 1 : -1 })
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+    if (populate) {
+        const populateOption = Array.isArray(populate) ? populate : [populate];
+        mongoQuery = mongoQuery.populate(populateOption);
+    }
+
+    const result = await mongoQuery
 
     return {
         meta: {

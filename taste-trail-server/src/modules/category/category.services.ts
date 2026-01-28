@@ -35,9 +35,15 @@ const deleteCategory = async (id: string) => {
     return deleteCategory
 }
 
+const getAllCategoriesForFiltering = async() => {
+    const categories = await Category.find()
+    return categories;
+}
+
 export const categoryServices = {
     createCategory,
     getAllCategories,
     updateCategory,
-    deleteCategory
+    deleteCategory,
+    getAllCategoriesForFiltering
 };

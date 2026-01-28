@@ -82,15 +82,14 @@ export default function CategoryTable({ categories }: { categories: ICategory[] 
                                     {category.name}
                                 </TableCell>
                                 <TableCell className="text-gray-700">{category.description}</TableCell>
-                                <TableCell className="text-gray-700">{category.createdAt}</TableCell>
-                                <TableCell className="text-gray-700">{category.updatedAt}</TableCell>
+                                <TableCell className="text-gray-700">{new Date(category.createdAt).toLocaleDateString()}</TableCell>
+                                <TableCell className="text-gray-700">{new Date(category.updatedAt).toLocaleDateString()}</TableCell>
 
                                 <TableCell className="text-right">
                                     <div className="flex justify-end gap-2">
                                         <Dialog>
                                             <DialogTrigger asChild>
                                                 <Button
-                                                    // onClick={() => viewCourseDetails(course.id)}
                                                     variant="ghost"
                                                     size="icon"
                                                     className="h-8 w-8 text-green-600 hover:bg-green-50 hover:text-green-700"

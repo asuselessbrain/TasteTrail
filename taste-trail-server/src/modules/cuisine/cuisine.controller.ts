@@ -54,9 +54,23 @@ const deleteCuisine = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllCuisinesForFiltering = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await cuisineServices.getAllCuisinesForFiltering()
+
+
+  responser(res, {
+    statusCode: 200,
+    message: 'Cuisines retrieved successfully',
+    data: result,
+  });
+});
+
+
 export const cuisineController = {
   createCuisine,
   getAllCuisines,
   updateCuisine,
-  deleteCuisine
+  deleteCuisine,
+  getAllCuisinesForFiltering
 };
