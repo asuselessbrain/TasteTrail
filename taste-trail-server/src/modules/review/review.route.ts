@@ -9,6 +9,8 @@ const router = express.Router();
 
 router.post('/', auth(USER_ROLE.user), validateRequest(createReviewSchema), reviewController.createReview);
 router.get('/', auth(USER_ROLE.admin), reviewController.getAllReviews);
+router.get('/total-average/:recipeId', auth(USER_ROLE.admin, USER_ROLE.user), reviewController.totalAndAverageReviewsByRecipeId);
+router.get('/approved/:recipeId', auth(USER_ROLE.admin, USER_ROLE.user), reviewController.getApprovedReviewsByRecipeId);
 router.patch('/approve/:id', auth(USER_ROLE.admin), reviewController.approveReview);
 router.patch('/reject/:id', auth(USER_ROLE.admin), reviewController.rejectReview);
 // router.get('/:id', auth(USER_ROLE.admin, USER_ROLE.user), reviewController.getSingleReview);

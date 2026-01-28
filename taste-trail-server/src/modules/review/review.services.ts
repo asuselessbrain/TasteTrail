@@ -1,3 +1,4 @@
+import { Types } from "mongoose";
 import { queryBuilder } from "../../builder/queryBuilder";
 import AppError from "../../errors/AppError";
 import { User } from "../auth/auth.model";
@@ -56,26 +57,41 @@ const rejectReview = async (id: string) => {
     return review;
 }
 
-// const updateRecipe = async (id: string, data: Partial<IRecipe>) => {
-//     const updateRecipe = await Recipe.findByIdAndUpdate(id, data, { new: true });
-//     return updateRecipe
-// }
+const getApprovedReviewsByRecipeId = async (recipeId: string) => {
+    const reviews = await Review.find({ recipeId, status: 'approved' }).populate('userId', 'fullName email profilePhoto').limit(10);
+    return reviews;
+}
 
-// const deleteRecipe = async (id: string) => {
-//     const deleteRecipe = await Recipe.findByIdAndDelete(id);
-//     return deleteRecipe
-// }
+export const totalAndAverageReviewsByRecipeId = async (recipeId: string) => {
+    const result = await Review.aggregate([
+        {
+            $match: {
+                recipeId: new Types.ObjectId(recipeId),
+                status: "approved",
+            },
+        },
+        {
+            $group: {
+                _id: "$recipeId",
+                totalReviews: { $sum: 1 },
+                averageRating: { $avg: "$rating" },
+            },
+        },
+    ]);
 
-// const getSingleRecipe = async (id:string) => {
-//     const recipe = await Recipe.findById(id).populate(["categoryId", "cuisineId"]);
-//     return recipe;
-// }
+    return {
+        totalReviews: result[0]?.totalReviews || 0,
+        averageRating: result[0]?.averageRating
+            ? Number(result[0].averageRating.toFixed(1))
+            : 0,
+    };
+};
+
 export const reviewServices = {
     createReview,
     getAllReviews,
     approveReview,
     rejectReview,
-    // updateRecipe,
-    // deleteRecipe,
-    // getSingleRecipe
+    getApprovedReviewsByRecipeId,
+    totalAndAverageReviewsByRecipeId
 };

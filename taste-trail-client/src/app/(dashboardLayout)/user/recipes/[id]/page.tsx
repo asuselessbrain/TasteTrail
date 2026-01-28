@@ -1,14 +1,18 @@
 import { getSingleRecipe } from "@/services/recipeService"
 import Image from "next/image"
-import { Clock, Flame, ChefHat, ArrowLeft, Share2, Heart } from "lucide-react"
+import { Clock, Flame, ChefHat, ArrowLeft, Share2, Heart, Star } from "lucide-react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import ReviewForm from "@/components/modules/user/recipe/ReviewForm"
 import ReviewsList from "@/components/modules/user/recipe/ReviewsList"
+import { totalAndAverageReviewsByRecipeId } from "@/services/review"
 
 export default async function RecipeDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = await params
     const singleRecipe = await getSingleRecipe(id)
+
+    const totalAndAverage = await totalAndAverageReviewsByRecipeId(id)
+
 
     if (!singleRecipe.success || !singleRecipe.data) {
         return (
@@ -95,7 +99,7 @@ export default async function RecipeDetailsPage({ params }: { params: Promise<{ 
                         {/* Reviews Section */}
                         <div className="border-t border-gray-200 pt-8">
                             <h3 className="text-xl font-bold text-gray-900 mb-6">Customer Reviews</h3>
-                            <ReviewsList reviews={[]} />
+                            <ReviewsList id={recipe._id} />
                         </div>
                     </div>
 
@@ -111,11 +115,17 @@ export default async function RecipeDetailsPage({ params }: { params: Promise<{ 
                                     </h1>
                                     <div className="flex items-center gap-2">
                                         <div className="flex gap-1">
-                                            {[...Array(5)].map((_, i) => (
-                                                <span key={i} className="text-orange-400">★</span>
+                                            {[1, 2, 3, 4, 5].map((star) => (
+                                                <Star
+                                                    key={star}
+                                                    className={`h-3 w-3 ${star <= Math.round(parseFloat(totalAndAverage.data.averageRating as string))
+                                                        ? "fill-yellow-400 text-yellow-400"
+                                                        : "text-gray-300"
+                                                        }`}
+                                                />
                                             ))}
                                         </div>
-                                        <span className="text-sm text-gray-600">(0 reviews)</span>
+                                        <span className="text-sm text-gray-600">({totalAndAverage.data.totalReviews} review{totalAndAverage.data.totalReviews !== 1 ? "s" : ""})</span>
                                     </div>
                                 </div>
 

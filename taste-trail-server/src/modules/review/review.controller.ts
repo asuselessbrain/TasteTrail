@@ -50,48 +50,32 @@ const rejectReview = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const updateRecipe = catchAsync(async (req: Request, res: Response) => {
+const getApprovedReviewsByRecipeId = catchAsync(async (req: Request, res: Response) => {
+  const { recipeId } = req.params;
+  const result = await reviewServices.getApprovedReviewsByRecipeId(recipeId as string);
+  responser(res, {
+    statusCode: 200,
+    message: 'Approved reviews retrieved successfully',
+    data: result,
+  });
+});
 
-//   const { id } = req.params
-//   const result = await recipeServices.updateRecipe(id as string, req.body)
+const totalAndAverageReviewsByRecipeId = catchAsync(async (req: Request, res: Response) => {
+  const { recipeId } = req.params;
+  const result = await reviewServices.totalAndAverageReviewsByRecipeId(recipeId as string);
+  responser(res, {
+    statusCode: 200,
+    message: 'Total and average reviews retrieved successfully',
+    data: result,
+  });
+});
 
-//   responser(res, {
-//     statusCode: 200,
-//     message: 'Recipes updated successfully',
-//     data: result,
-//   });
-// });
-
-// const deleteRecipe = catchAsync(async (req: Request, res: Response) => {
-
-//   const { id } = req.params
-//   const result = await recipeServices.deleteRecipe(id as string)
-
-//   responser(res, {
-//     statusCode: 200,
-//     message: 'Recipes deleted successfully',
-//     data: result,
-//   });
-// });
-
-// const getSingleRecipe = catchAsync(async (req: Request, res: Response) => {
-
-//   const { id } = req.params
-//   const result = await recipeServices.getSingleRecipe(id as string)
-
-//   responser(res, {
-//     statusCode: 200,
-//     message: 'Recipes retrieved successfully',
-//     data: result,
-//   });
-// });
 
 export const reviewController = {
   createReview,
   getAllReviews,
   approveReview,
-  rejectReview
-  // updateReview,
-  // deleteReview,
-  // getSingleReview
+  rejectReview,
+  getApprovedReviewsByRecipeId,
+  totalAndAverageReviewsByRecipeId
 };

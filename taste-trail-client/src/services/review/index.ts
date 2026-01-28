@@ -55,25 +55,28 @@ export const rejectReview = async (id: string) => {
     }
 }
 
-export const updateRecipe = async (id: string, data: FieldValues) => {
+export const getApprovedReviewsByRecipe = async (id: string) => {
     try {
-        const res = await baseApi(`/recipes/${id}`, {
-            method: 'PATCH',
-            body: JSON.stringify(data)
+        const res = await baseApi(`/reviews/approved/${id}`, {
+            method: 'GET',
+            next: {
+                tags: ['reviews']
+            }
         })
-        revalidateTag('recipes', 'max')
         return res
     } catch (error) {
         throw error
     }
 }
 
-export const deleteRecipe = async (id: string) => {
+export const totalAndAverageReviewsByRecipeId = async (id: string) => {
     try {
-        const res = await baseApi(`/recipes/${id}`, {
-            method: 'DELETE',
+        const res = await baseApi(`/reviews/total-average/${id}`, {
+            method: 'GET',
+            next: {
+                tags: ['reviews']
+            }
         })
-        revalidateTag('recipes', 'max')
         return res
     } catch (error) {
         throw error
