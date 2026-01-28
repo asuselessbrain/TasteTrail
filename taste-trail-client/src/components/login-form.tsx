@@ -22,6 +22,7 @@ import { z } from "zod"
 import Link from "next/link"
 import { signIn } from "@/services/authService"
 import { toast } from "sonner"
+import { useRouter } from "next/navigation"
 
 const loginValidationSchema = z.object({
   email: z.string().email("Invalid email format"),
@@ -46,12 +47,22 @@ export function LoginForm({
 
   const { formState: { isSubmitting } } = form
 
+  const router = useRouter();
+
+
   const handleSignIn = async (data: FieldValues) => {
     const res = await signIn(data)
-
-    if (res.success) {
+    if (res.success && res.data.user) {
+      const { role } = res.data.user;
       toast.success(res.message || "Account created successfully!")
       form.reset()
+      switch (role) {
+        case "admin":
+          router.push("/admin");
+          break;
+        default:
+          router.push("/user");
+      }
     }
     else {
       toast.error(res.errorMessage || "Failed to create account. Please try again.")
