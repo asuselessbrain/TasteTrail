@@ -24,7 +24,14 @@ const getAllCategories = async (options: Record<string, any>) => {
     return categories;
 }
 
+const updateCategory = async (id: string, data: Partial<ICategory>) => {
+    const updateCategory = await Category.findByIdAndUpdate(id, data, { new: true });
+
+    return updateCategory
+}
+
 export const categoryServices = {
     createCategory,
-    getAllCategories
+    getAllCategories,
+    updateCategory
 };

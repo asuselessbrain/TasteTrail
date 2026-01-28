@@ -20,7 +20,6 @@ const getAllCategories = catchAsync(async (req: Request, res: Response) => {
 
   const result = await categoryServices.getAllCategories(options)
 
-  console.log(result)
 
   responser(res, {
     statusCode: 200,
@@ -30,7 +29,22 @@ const getAllCategories = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+
+const updateCategory = catchAsync(async (req: Request, res: Response) => {
+
+  const { id } = req.params
+  const result = await categoryServices.updateCategory(id as string, req.body)
+
+
+  responser(res, {
+    statusCode: 200,
+    message: 'Categories retrieved successfully',
+    data: result,
+  });
+});
+
 export const categoryController = {
   createCategory,
-  getAllCategories
+  getAllCategories,
+  updateCategory
 };

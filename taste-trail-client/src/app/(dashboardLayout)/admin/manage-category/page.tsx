@@ -2,9 +2,12 @@ import CategoryTable from "@/components/modules/admin/category/CategoryTable";
 import CreateCategoryModal from "@/components/modules/admin/category/CreateCategoryModal";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
+import { getAllCategories } from "@/services/categoryService";
 import { Plus } from "lucide-react";
 
-export default function ManageCategoryPage() {
+export default async function ManageCategoryPage() {
+    const categories = await getAllCategories()
+
     return (
         <div className="max-w-360 w-full mx-auto">
             <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
@@ -28,7 +31,7 @@ export default function ManageCategoryPage() {
                 </Dialog>
             </div>
 
-            <CategoryTable />
+            <CategoryTable categories={categories.data} />
         </div>
     )
 }

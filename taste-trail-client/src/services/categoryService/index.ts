@@ -2,6 +2,7 @@
 
 import { FieldValues } from "react-hook-form"
 import { baseApi } from "../baseApi"
+import { revalidateTag } from "next/cache"
 
 export const createCategory = async (data: FieldValues) => {
     try {
@@ -9,6 +10,34 @@ export const createCategory = async (data: FieldValues) => {
             method: 'POST',
             body: JSON.stringify(data)
         })
+        revalidateTag('categories', 'max')
+        return res
+    } catch (error) {
+        throw error
+    }
+}
+
+export const getAllCategories = async () => {
+    try {
+        const res = await baseApi('/categories', {
+            method: 'GET',
+            next: {
+                tags: ['categories']
+            }
+        })
+        return res
+    } catch (error) {
+        throw error
+    }
+}
+
+export const updateCategory = async (id: string, data: FieldValues) => {
+    try {
+        const res = await baseApi(`/categories/${id}`, {
+            method: 'PATCH',
+            body: JSON.stringify(data)
+        })
+        revalidateTag('categories', 'max')
         return res
     } catch (error) {
         throw error

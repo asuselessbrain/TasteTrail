@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/', auth(USER_ROLE.admin), categoryController.createCategory);
 router.get('/', auth(USER_ROLE.admin), categoryController.getAllCategories);
+router.patch('/:id', auth(USER_ROLE.admin), categoryController.updateCategory);
 
 
 export const categoryRoutes = router;

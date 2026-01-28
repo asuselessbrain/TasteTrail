@@ -1,13 +1,16 @@
+import { Button } from "@/components/ui/button"
+import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import {
     Table,
     TableBody,
-    TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
+import { ICategory } from "@/types"
+import { Edit, Eye, Trash2 } from "lucide-react"
+import UpdateCategoryModal from "./UpdateCategoryModal"
 const invoices = [
     {
         invoice: "INV001",
@@ -53,35 +56,80 @@ const invoices = [
     },
 ]
 
-export default function CategoryTable() {
+export default function CategoryTable({ categories }: { categories: ICategory[] }) {
     return (
         <div className="rounded-lg border bg-white shadow-sm my-8">
             <Table>
-                    <TableHeader>
-                        <TableRow className="border-b bg-gray-50 hover:bg-gray-50">
-                            <TableHead className="font-semibold text-gray-700">Course Code</TableHead>
-                            <TableHead className="font-semibold text-gray-700">Course Title</TableHead>
-                            <TableHead className="font-semibold text-gray-700">Credits</TableHead>
-                            <TableHead className="font-semibold text-gray-700">Status</TableHead>
-                            <TableHead className="text-right font-semibold text-gray-700">Actions</TableHead>
-                        </TableRow>
-                    </TableHeader>
+                <TableHeader>
+                    <TableRow className="border-b bg-gray-50 hover:bg-gray-50">
+                        <TableHead className="font-semibold text-gray-700">Name</TableHead>
+                        <TableHead className="font-semibold text-gray-700">Description</TableHead>
+                        <TableHead className="font-semibold text-gray-700">Created At</TableHead>
+                        <TableHead className="font-semibold text-gray-700">Updated At</TableHead>
+                        <TableHead className="text-right font-semibold text-gray-700">Actions</TableHead>
+                    </TableRow>
+                </TableHeader>
 
-                <TableBody>
-                    {invoices.map((invoice, i) => (
-                        <TableRow
-                            key={invoice.invoice}
-                            className={i % 2 === 0 ? "bg-background" : "bg-muted/20"}
-                        >
-                            <TableCell className="font-semibold">{invoice.invoice}</TableCell>
-                            <TableCell>{invoice.paymentStatus}</TableCell>
-                            <TableCell className="capitalize">{invoice.paymentMethod}</TableCell>
-                            <TableCell className="text-right font-medium">
-                                ${invoice.totalAmount}
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
+                 <TableBody>
+                        {categories && categories.length > 0 ? (
+                            categories.map((category) => (
+                                <TableRow
+                                    key={category._id}
+                                    className="border-b transition-colors hover:bg-gray-50"
+                                >
+                                    <TableCell className="font-medium text-gray-900">
+                                        {category.name}
+                                    </TableCell>
+                                    <TableCell className="text-gray-700">{category.description}</TableCell>
+                                    <TableCell className="text-gray-700">{category.createdAt}</TableCell>
+                                    <TableCell className="text-gray-700">{category.updatedAt}</TableCell>
+
+                                    <TableCell className="text-right">
+                                        <div className="flex justify-end gap-2">                                            
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        // onClick={() => viewCourseDetails(course.id)}
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 text-green-600 hover:bg-green-50 hover:text-green-700"
+                                                        title="Edit course"
+                                                    >
+                                                        <Edit className="h-4 w-4" />
+                                                    </Button>
+                                                </DialogTrigger>
+                                                <UpdateCategoryModal category={category} />
+                                            </Dialog>
+                                            <Dialog>
+                                                <DialogTrigger asChild>
+                                                    <Button
+                                                        // onClick={() => viewCourseDetails(course.id)}
+                                                        variant="ghost"
+                                                        size="icon"
+                                                        className="h-8 w-8 text-red-600 hover:bg-red-50 hover:text-red-700"
+                                                        title="View course details"
+                                                    >
+                                                        <Trash2 className="h-4 w-4" />
+                                                    </Button>
+
+                                                </DialogTrigger>
+                                                {/* <ViewCourseDetails course={singleCourse} /> */}
+                                            </Dialog>
+                                        </div>
+                                    </TableCell>
+                                </TableRow>
+                            ))
+                        ) : (
+                            <TableRow>
+                                <TableCell colSpan={5} className="py-8 text-center">
+                                    <div className="text-gray-500">
+                                        <p className="text-lg font-medium">No courses found</p>
+                                        <p className="text-sm">Create your first course to get started</p>
+                                    </div>
+                                </TableCell>
+                            </TableRow>
+                        )}
+                    </TableBody>
             </Table>
         </div>
     )

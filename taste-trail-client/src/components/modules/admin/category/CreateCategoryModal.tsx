@@ -38,7 +38,7 @@ export default function CreateCategoryModal() {
     };
 
     return (
-        <DialogContent className="sm:max-w-[500px]">
+        <DialogContent className="sm:max-w-125">
             <DialogHeader>
                 <DialogTitle>Create Category</DialogTitle>
                 <DialogDescription>
@@ -86,7 +86,7 @@ export default function CreateCategoryModal() {
                                     id={field.name}
                                     aria-invalid={fieldState.invalid}
                                     placeholder="Short description..."
-                                    className="min-h-[100px] w-full rounded-md border bg-background px-3 py-2 text-sm"
+                                    className="min-h-25 w-full rounded-md border bg-background px-3 py-2 text-sm"
                                 />
                                 <FieldDescription>
                                     Provide a short description for this category.
