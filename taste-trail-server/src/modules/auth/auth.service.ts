@@ -8,9 +8,9 @@ import { StringValue } from "ms";
 
 const register = async (payload: IUser) => {
 
-  const isEmailExist = await User.find({ email: payload.email })
+  const isEmailExist = await User.findOne({ email: payload.email })
 
-  if(isEmailExist){
+  if (isEmailExist) {
     throw new AppError(409, "User with this email already exists")
   }
   const hashedPassword = await bcrypt.hash(payload.password, Number(config.bcrypt_salt_rounds))
@@ -56,7 +56,7 @@ const login = async (payload: { email: string; password: string }) => {
 };
 
 const logout = async () => {
-    return null
+  return null
 }
 
 
