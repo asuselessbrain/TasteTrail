@@ -125,6 +125,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Manage Recipes",
       url: "/admin/manage-recipe",
       icon: BookOpen
+    },
+    {
+      title: "Reviews",
+      url: "/admin/reviews",
+      icon: Star
     }
   ]
 

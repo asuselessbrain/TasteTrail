@@ -6,6 +6,7 @@ import { globalErrorHandlear } from './globalErrorHandlear/globalErrorHandlear';
 import { categoryRoutes } from './modules/category/category.route';
 import { cuisineRoutes } from './modules/cuisine/cuisine.route';
 import { recipeRoutes } from './modules/recipe/recipe.route';
+import { reviewRoutes } from './modules/review/review.route';
 const app = express();
 
 app.use(express.json());
@@ -16,6 +17,7 @@ app.use('/api/v1/auth', authRouter)
 app.use('/api/v1/categories', categoryRoutes)
 app.use('/api/v1/cuisines', cuisineRoutes)
 app.use('/api/v1/recipes', recipeRoutes)
+app.use('/api/v1/reviews', reviewRoutes)
 
 app.get('/', (req: Request, res: Response) => {
     res.json({
