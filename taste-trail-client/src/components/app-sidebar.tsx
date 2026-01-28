@@ -2,17 +2,9 @@
 
 import * as React from "react"
 import {
-  AudioWaveform,
   BookOpen,
-  Bot,
-  Command,
-  Frame,
   GalleryVerticalEnd,
   LayoutDashboard,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -69,6 +61,16 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       title: "Overview",
       url: "/admin",
       icon: LayoutDashboard
+    },
+    {
+      title: "Manage Categories",
+      url: "/admin/manage-category",
+      icon: BookOpen
+    },
+    {
+      title: "Manage Cuisines",
+      url: "/admin/manage-cuisine",
+      icon: GalleryVerticalEnd
     }
   ]
 
