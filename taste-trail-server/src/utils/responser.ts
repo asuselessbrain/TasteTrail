@@ -5,6 +5,7 @@ type IData<T> = {
   message: string;
   success?: boolean;
   token?: string;
+  meta?: Record<string, any>
   data: T | T[] | null;
 };
 
@@ -14,6 +15,7 @@ export const responser = <T>(res: Response, data: IData<T>) => {
     statusCode: data.statusCode,
     message: data.message,
     token: data.token,
+    meta: data.meta,
     data: data.data,
   });
 };

@@ -21,7 +21,6 @@ const getAllCategories = async (options: Record<string, any>) => {
         page,
         limit
     })
-    // const categories = await Category.find();
     return categories;
 }
 

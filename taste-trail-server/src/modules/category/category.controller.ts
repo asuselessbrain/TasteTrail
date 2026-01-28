@@ -20,10 +20,13 @@ const getAllCategories = catchAsync(async (req: Request, res: Response) => {
 
   const result = await categoryServices.getAllCategories(options)
 
+  console.log(result)
+
   responser(res, {
     statusCode: 200,
     message: 'Categories retrieved successfully',
-    data: result,
+    meta: result.meta,
+    data: result.data,
   });
 });
 
