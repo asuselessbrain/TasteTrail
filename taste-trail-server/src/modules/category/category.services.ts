@@ -1,3 +1,4 @@
+import { queryBuilder } from "../../builder/queryBuilder";
 import { Category } from "./category.medel";
 import { ICategory } from "./category.type";
 
@@ -8,7 +9,19 @@ const createCategory = async (data: ICategory) => {
 }
 
 const getAllCategories = async (options: Record<string, any>) => {
-    const categories = await Category.find();
+
+    const { filters, search, sortBy, sortOrder, page, limit } = options;
+
+    const categories = await queryBuilder(Category, {
+        filters,
+        search,
+        searchFields: ['name', 'description'],
+        sortBy,
+        sortOrder,
+        page,
+        limit
+    })
+    // const categories = await Category.find();
     return categories;
 }
 
