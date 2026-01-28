@@ -18,24 +18,24 @@ const register = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
-// const login = catchAsync(async (req: Request, res: Response) => {
-//   const result = await AuthService.login(req.body);
+const login = catchAsync(async (req: Request, res: Response) => {
+  const result = await AuthService.login(req.body);
 
-//   res.cookie('refreshToken', result?.refreshToken, {
-//     secure: config.node_env === 'production',
-//     httpOnly: true,
-//     sameSite: 'none',
-//   });
+  res.cookie('accessToken', result?.token, {
+    secure: config.node_env === 'production',
+    httpOnly: true,
+    sameSite: 'none',
+  });
 
-//   responser(res, {
-//     statusCode: StatusCodes.ACCEPTED,
-//     message: 'Login Successful',
-//     data: result,
-//   });
-// });
+  responser(res, {
+    statusCode: 200,
+    message: 'Login Successful',
+    data: result,
+  });
+});
 
 
 export const AuthControllers = {
   register,
-  // login
+  login
 };

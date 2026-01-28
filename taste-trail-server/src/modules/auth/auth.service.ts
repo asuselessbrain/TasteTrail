@@ -3,8 +3,16 @@ import jwt, { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
 import { IUser } from './auth.type';
 import { User } from './auth.model';
+import AppError from '../../errors/AppError';
+import { StringValue } from "ms";
 
 const register = async (payload: IUser) => {
+
+  const isEmailExist = await User.find({ email: payload.email })
+
+  if(isEmailExist){
+    throw new AppError(409, "User with this email already exists")
+  }
   const hashedPassword = await bcrypt.hash(payload.password, Number(config.bcrypt_salt_rounds))
   const userData = {
     fullName: payload.fullName,
@@ -16,54 +24,39 @@ const register = async (payload: IUser) => {
   return user.save();
 };
 
-// const login = async (payload: { email: string; password: string }) => {
-//   // checking if the user is exist
-//   const user = await User.findOne({ email: payload?.email }).select(
-//     '+password',
-//   );
+const login = async (payload: { email: string; password: string }) => {
+  const user = await User.findOne({ email: payload?.email }).select(
+    '+password',
+  );
 
-//   if (!user) {
-//     throw new Error('user not found !');
-//   }
+  if (!user) {
+    throw new Error('user not found !');
+  }
 
-//   // checking if the user is blocked
-//   const userStatus = user?.userStatus;
+  //checking if the password is correct
+  const isPasswordMatched = await bcrypt.compare(
+    payload?.password,
+    user?.password,
+  );
 
-//   if (userStatus === 'blocked') {
-//     throw new Error('User is blocked ! !');
-//   }
+  if (!isPasswordMatched) {
+    throw new Error('Wrong Password!!! 😈');
+  }
 
-//   //checking if the password is correct
-//   const isPasswordMatched = await bcrypt.compare(
-//     payload?.password,
-//     user?.password,
-//   );
+  const jwtPayload = {
+    email: user?.email,
+    role: user?.role,
+  };
 
-//   if (!isPasswordMatched) {
-//     throw new Error('Wrong Password!!! 😈');
-//   }
+  const token = jwt.sign(jwtPayload, config.jwt.token_secret as string, {
+    expiresIn: config.jwt.token_expires_in as StringValue,
+  });
 
-//   const jwtPayload = {
-//     email: user?.email,
-//     role: user?.role,
-//   };
-
-//   const token = jwt.sign(jwtPayload, config.jwt_secret as string, {
-//     expiresIn: '1d',
-//   });
-
-//   const refreshToken = jwt.sign(
-//     jwtPayload,
-//     config.jwt_refresh_secret as string,
-//     {
-//       expiresIn: '7d',
-//     },
-//   );
-//   return { token, user, refreshToken };
-// };
+  return { token, user };
+};
 
 
 export const AuthService = {
   register,
-  // login
+  login
 };

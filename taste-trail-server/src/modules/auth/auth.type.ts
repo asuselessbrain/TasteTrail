@@ -3,4 +3,5 @@ export type IUser = {
   email: string;
   profilePhoto: string;
   password: string;
+  role?: 'admin' | 'user'
 };
