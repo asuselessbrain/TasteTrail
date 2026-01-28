@@ -30,8 +30,14 @@ const updateCategory = async (id: string, data: Partial<ICategory>) => {
     return updateCategory
 }
 
+const deleteCategory = async (id: string) => {
+    const deleteCategory = await Category.findByIdAndDelete(id);
+    return deleteCategory
+}
+
 export const categoryServices = {
     createCategory,
     getAllCategories,
-    updateCategory
+    updateCategory,
+    deleteCategory
 };

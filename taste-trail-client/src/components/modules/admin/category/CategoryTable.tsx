@@ -11,6 +11,7 @@ import {
 import { ICategory } from "@/types"
 import { Edit, Eye, Trash2 } from "lucide-react"
 import UpdateCategoryModal from "./UpdateCategoryModal"
+import DeleteCategoryAction from "./DeleteCategoryAction"
 const invoices = [
     {
         invoice: "INV001",
@@ -70,66 +71,52 @@ export default function CategoryTable({ categories }: { categories: ICategory[] 
                     </TableRow>
                 </TableHeader>
 
-                 <TableBody>
-                        {categories && categories.length > 0 ? (
-                            categories.map((category) => (
-                                <TableRow
-                                    key={category._id}
-                                    className="border-b transition-colors hover:bg-gray-50"
-                                >
-                                    <TableCell className="font-medium text-gray-900">
-                                        {category.name}
-                                    </TableCell>
-                                    <TableCell className="text-gray-700">{category.description}</TableCell>
-                                    <TableCell className="text-gray-700">{category.createdAt}</TableCell>
-                                    <TableCell className="text-gray-700">{category.updatedAt}</TableCell>
+                <TableBody>
+                    {categories && categories.length > 0 ? (
+                        categories.map((category) => (
+                            <TableRow
+                                key={category._id}
+                                className="border-b transition-colors hover:bg-gray-50"
+                            >
+                                <TableCell className="font-medium text-gray-900">
+                                    {category.name}
+                                </TableCell>
+                                <TableCell className="text-gray-700">{category.description}</TableCell>
+                                <TableCell className="text-gray-700">{category.createdAt}</TableCell>
+                                <TableCell className="text-gray-700">{category.updatedAt}</TableCell>
 
-                                    <TableCell className="text-right">
-                                        <div className="flex justify-end gap-2">                                            
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        // onClick={() => viewCourseDetails(course.id)}
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-green-600 hover:bg-green-50 hover:text-green-700"
-                                                        title="Edit course"
-                                                    >
-                                                        <Edit className="h-4 w-4" />
-                                                    </Button>
-                                                </DialogTrigger>
-                                                <UpdateCategoryModal category={category} />
-                                            </Dialog>
-                                            <Dialog>
-                                                <DialogTrigger asChild>
-                                                    <Button
-                                                        // onClick={() => viewCourseDetails(course.id)}
-                                                        variant="ghost"
-                                                        size="icon"
-                                                        className="h-8 w-8 text-red-600 hover:bg-red-50 hover:text-red-700"
-                                                        title="View course details"
-                                                    >
-                                                        <Trash2 className="h-4 w-4" />
-                                                    </Button>
-
-                                                </DialogTrigger>
-                                                {/* <ViewCourseDetails course={singleCourse} /> */}
-                                            </Dialog>
-                                        </div>
-                                    </TableCell>
-                                </TableRow>
-                            ))
-                        ) : (
-                            <TableRow>
-                                <TableCell colSpan={5} className="py-8 text-center">
-                                    <div className="text-gray-500">
-                                        <p className="text-lg font-medium">No courses found</p>
-                                        <p className="text-sm">Create your first course to get started</p>
+                                <TableCell className="text-right">
+                                    <div className="flex justify-end gap-2">
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button
+                                                    // onClick={() => viewCourseDetails(course.id)}
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-8 w-8 text-green-600 hover:bg-green-50 hover:text-green-700"
+                                                    title="Edit course"
+                                                >
+                                                    <Edit className="h-4 w-4" />
+                                                </Button>
+                                            </DialogTrigger>
+                                            <UpdateCategoryModal category={category} />
+                                        </Dialog>
+                                        <DeleteCategoryAction id={category._id} />
                                     </div>
                                 </TableCell>
                             </TableRow>
-                        )}
-                    </TableBody>
+                        ))
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={5} className="py-8 text-center">
+                                <div className="text-gray-500">
+                                    <p className="text-lg font-medium">No courses found</p>
+                                    <p className="text-sm">Create your first course to get started</p>
+                                </div>
+                            </TableCell>
+                        </TableRow>
+                    )}
+                </TableBody>
             </Table>
         </div>
     )
