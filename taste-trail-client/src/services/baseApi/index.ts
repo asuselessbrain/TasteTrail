@@ -17,10 +17,6 @@ export const baseApi = async (url: string, options: RequestInit = {}) => {
 
     const data = await res.json()
 
-    if (!res.ok) {
-        throw data
-    }
-
     return data
 
 }

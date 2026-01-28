@@ -13,8 +13,5 @@ router.get('/total-average/:recipeId', auth(USER_ROLE.admin, USER_ROLE.user), re
 router.get('/approved/:recipeId', auth(USER_ROLE.admin, USER_ROLE.user), reviewController.getApprovedReviewsByRecipeId);
 router.patch('/approve/:id', auth(USER_ROLE.admin), reviewController.approveReview);
 router.patch('/reject/:id', auth(USER_ROLE.admin), reviewController.rejectReview);
-// router.get('/:id', auth(USER_ROLE.admin, USER_ROLE.user), reviewController.getSingleReview);
-// router.patch('/:id', auth(USER_ROLE.admin), reviewController.updateReview);
-// router.delete('/:id', auth(USER_ROLE.admin), reviewController.deleteReview);
 
 export const reviewRoutes = router;
