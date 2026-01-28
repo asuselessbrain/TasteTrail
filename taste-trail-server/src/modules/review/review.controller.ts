@@ -40,6 +40,16 @@ const approveReview = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const rejectReview = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await reviewServices.rejectReview(id as string);
+  responser(res, {
+    statusCode: 200,
+    message: 'Review rejected successfully',
+    data: result,
+  });
+});
+
 // const updateRecipe = catchAsync(async (req: Request, res: Response) => {
 
 //   const { id } = req.params
@@ -79,7 +89,8 @@ const approveReview = catchAsync(async (req: Request, res: Response) => {
 export const reviewController = {
   createReview,
   getAllReviews,
-  approveReview
+  approveReview,
+  rejectReview
   // updateReview,
   // deleteReview,
   // getSingleReview

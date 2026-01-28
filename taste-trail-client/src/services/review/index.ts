@@ -35,10 +35,20 @@ export const approveReview = async (id: string) => {
     try {
         const res = await baseApi(`/reviews/approve/${id}`, {
             method: 'PATCH',
-            next: {
-                tags: ['reviews']
-            }
         })
+        revalidateTag('review', 'max')
+        return res
+    } catch (error) {
+        throw error
+    }
+}
+
+export const rejectReview = async (id: string) => {
+    try {
+        const res = await baseApi(`/reviews/reject/${id}`, {
+            method: 'PATCH'
+        })
+        revalidateTag('review', 'max')
         return res
     } catch (error) {
         throw error
@@ -78,7 +88,7 @@ export const getSingleRecipe = async (id: string) => {
                 tags: ['recipes']
             }
         })
-        
+
         return res
     } catch (error) {
         throw error

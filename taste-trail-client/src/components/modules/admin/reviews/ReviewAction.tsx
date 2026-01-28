@@ -1,5 +1,5 @@
 import { Button } from "@/components/ui/button";
-import { approveReview } from "@/services/review";
+import { approveReview, rejectReview } from "@/services/review";
 import Link from "next/link";
 import { toast } from "sonner";
 
@@ -15,6 +15,18 @@ export default function ReviewAction({ review }: { review: any }) {
             toast.error(res.errorMessage || "Failed to approve review.");
         }
     }
+
+    const handleRejectReview = async () => {
+        const res = await rejectReview(review._id);
+
+        if (res.success) {
+            toast.success(res.message || "Review rejected successfully!");
+        } else {
+            toast.error(res.errorMessage || "Failed to reject review.");
+        }
+    }
+
+    
     return (
         <div className="flex justify-end gap-2">
             <Link href={`/reviews/${review._id}`}>
@@ -38,6 +50,7 @@ export default function ReviewAction({ review }: { review: any }) {
             )}
             {review.status !== "rejected" && (
                 <Button
+                onClick={handleRejectReview}
                     size="sm"
                     variant="outline"
                     className="text-red-600 border-red-600 hover:bg-red-50 hover:text-red-700"
