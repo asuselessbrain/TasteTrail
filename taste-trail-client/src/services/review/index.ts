@@ -31,6 +31,20 @@ export const getAllReviews = async () => {
     }
 }
 
+export const approveReview = async (id: string) => {
+    try {
+        const res = await baseApi(`/reviews/approve/${id}`, {
+            method: 'PATCH',
+            next: {
+                tags: ['reviews']
+            }
+        })
+        return res
+    } catch (error) {
+        throw error
+    }
+}
+
 export const updateRecipe = async (id: string, data: FieldValues) => {
     try {
         const res = await baseApi(`/recipes/${id}`, {

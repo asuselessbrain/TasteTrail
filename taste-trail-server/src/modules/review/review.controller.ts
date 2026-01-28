@@ -29,6 +29,16 @@ const getAllReviews = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const approveReview = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const result = await reviewServices.approveReview(id as string);
+
+  responser(res, {
+    statusCode: 200,
+    message: 'Review approved successfully',
+    data: result,
+  });
+});
 
 // const updateRecipe = catchAsync(async (req: Request, res: Response) => {
 
@@ -69,6 +79,7 @@ const getAllReviews = catchAsync(async (req: Request, res: Response) => {
 export const reviewController = {
   createReview,
   getAllReviews,
+  approveReview
   // updateReview,
   // deleteReview,
   // getSingleReview

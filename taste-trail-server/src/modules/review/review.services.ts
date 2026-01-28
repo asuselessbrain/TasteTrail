@@ -46,6 +46,11 @@ const getAllReviews = async (options: Record<string, any>) => {
     return recipes;
 }
 
+const approveReview = async (id: string) => {
+    const review = await Review.findByIdAndUpdate(id, { status: 'approved' }, { new: true });
+    return review;
+}
+
 // const updateRecipe = async (id: string, data: Partial<IRecipe>) => {
 //     const updateRecipe = await Recipe.findByIdAndUpdate(id, data, { new: true });
 //     return updateRecipe
@@ -63,6 +68,7 @@ const getAllReviews = async (options: Record<string, any>) => {
 export const reviewServices = {
     createReview,
     getAllReviews,
+    approveReview,
     // updateRecipe,
     // deleteRecipe,
     // getSingleRecipe
