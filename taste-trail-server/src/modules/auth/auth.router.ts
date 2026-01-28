@@ -1,4 +1,4 @@
-import { NextFunction, Router } from 'express';
+import { Router } from 'express';
 import { AuthControllers } from './auth.controller';
 import { AuthValidation } from './auth.validation';
 import validateRequest from '../../middlewares/validateRequest';
@@ -16,4 +16,10 @@ authRouter.post(
   validateRequest(AuthValidation.loginValidationSchema),
   AuthControllers.login,
 );
+
+authRouter.get(
+  '/logout',
+  AuthControllers.logout
+);
+
 export default authRouter;

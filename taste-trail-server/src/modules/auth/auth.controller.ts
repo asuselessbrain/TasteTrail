@@ -2,8 +2,14 @@ import { Request, Response } from 'express';
 import { responser } from '../../utils/responser';
 import { catchAsync } from '../../utils/catchAsync';
 import { AuthService } from './auth.service';
-import { JwtPayload } from 'jsonwebtoken';
 import config from '../../config';
+
+const cookieOptions = {
+  secure: config.node_env === 'production',
+  httpOnly: true,
+  sameSite: 'none' as const,
+};
+
 
 const register = catchAsync(async (req: Request, res: Response) => {
   console.log(req.body)
@@ -21,11 +27,7 @@ const register = catchAsync(async (req: Request, res: Response) => {
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
 
-  res.cookie('accessToken', result?.token, {
-    secure: config.node_env === 'production',
-    httpOnly: true,
-    sameSite: 'none',
-  });
+  res.cookie('accessToken', result?.token, cookieOptions);
 
   responser(res, {
     statusCode: 200,
@@ -34,8 +36,22 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const logout = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await AuthService.logout();
+
+  res.clearCookie("accessToken", cookieOptions);
+
+  responser(res, {
+    statusCode: 200,
+    message: "Logout successful",
+    data: result
+  });
+})
+
 
 export const AuthControllers = {
   register,
-  login
+  login,
+  logout
 };

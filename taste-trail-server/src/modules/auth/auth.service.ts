@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import jwt, { JwtPayload } from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import config from '../../config';
 import { IUser } from './auth.type';
 import { User } from './auth.model';
@@ -55,8 +55,13 @@ const login = async (payload: { email: string; password: string }) => {
   return { token, user };
 };
 
+const logout = async () => {
+    return null
+}
+
 
 export const AuthService = {
   register,
-  login
+  login,
+  logout
 };
