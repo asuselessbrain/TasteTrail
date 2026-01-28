@@ -2,9 +2,8 @@
 import { IRecipe } from "@/types"
 import Image from "next/image"
 import { Clock, Flame, UtensilsCrossed } from "lucide-react"
-import { Dialog, DialogTrigger } from "@/components/ui/dialog"
 import { Button } from "@/components/ui/button"
-import ViewRecipeModal from "@/components/modules/admin/recipe/ViewRecipeModal"
+import Link from "next/link"
 
 interface RecipeCardProps {
     recipe: IRecipe
@@ -24,7 +23,7 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                     />
                 </div>
             ) : (
-                <div className="h-48 w-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+                <div className="h-48 w-full bg-linear-to-br from-gray-200 to-gray-300 flex items-center justify-center">
                     <UtensilsCrossed className="h-12 w-12 text-gray-400" />
                 </div>
             )}
@@ -76,15 +75,12 @@ export default function RecipeCard({ recipe }: RecipeCardProps) {
                 )}
 
                 {/* View Button */}
-                <Dialog>
-                    <DialogTrigger asChild>
-                        <Button className="w-full">
-                            View Recipe
-                        </Button>
-                    </DialogTrigger>
-                    <ViewRecipeModal recipe={recipe} />
-                </Dialog>
+                <Link href={`/user/recipes/${recipe._id}`}>
+                    <Button className="w-full">
+                        View Recipe
+                    </Button>
+                </Link>
             </div>
-        </div>
+        </div >
     )
 }

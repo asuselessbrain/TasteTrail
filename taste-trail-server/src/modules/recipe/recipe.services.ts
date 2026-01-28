@@ -35,9 +35,14 @@ const deleteRecipe = async (id: string) => {
     return deleteRecipe
 }
 
+const getSingleRecipe = async (id:string) => {
+    const recipe = await Recipe.findById(id).populate(["categoryId", "cuisineId"]);
+    return recipe;
+}
 export const recipeServices = {
     createRecipe,
     getAllRecipes,
     updateRecipe,
-    deleteRecipe
+    deleteRecipe,
+    getSingleRecipe
 };

@@ -55,3 +55,18 @@ export const deleteRecipe = async (id: string) => {
         throw error
     }
 }
+
+export const getSingleRecipe = async (id: string) => {
+    try {
+        const res = await baseApi(`/recipes/${id}`, {
+            method: 'GET',
+            next: {
+                tags: ['recipes']
+            }
+        })
+        
+        return res
+    } catch (error) {
+        throw error
+    }
+}
