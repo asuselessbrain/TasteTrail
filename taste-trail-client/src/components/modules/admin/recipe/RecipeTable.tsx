@@ -8,10 +8,11 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table"
-import { Edit } from "lucide-react"
+import { Edit, Eye } from "lucide-react"
 import { IRecipe } from "@/types"
 import DeleteRecipeAction from "./DeleteRecipeAction"
 import UpdateRecipeModal from "./UpdateRecipeModal"
+import ViewRecipeModal from "./ViewRecipeModal"
 
 export default function RecipeTable({ recipes }: { recipes: IRecipe[] }) {
     return (
@@ -62,6 +63,20 @@ export default function RecipeTable({ recipes }: { recipes: IRecipe[] }) {
 
                                 <TableCell className="text-right">
                                     <div className="flex justify-end gap-2">
+                                        <Dialog>
+                                            <DialogTrigger asChild>
+                                                <Button
+                                                    variant="ghost"
+                                                    size="icon"
+                                                    className="h-8 w-8 text-blue-600 hover:bg-blue-50 hover:text-blue-700"
+                                                    title="View recipe"
+                                                >
+                                                    <Eye className="h-4 w-4" />
+                                                </Button>
+                                            </DialogTrigger>
+                                            <ViewRecipeModal recipe={recipe} />
+                                        </Dialog>
+
                                         <Dialog>
                                             <DialogTrigger asChild>
                                                 <Button

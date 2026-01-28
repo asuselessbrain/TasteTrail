@@ -118,7 +118,7 @@ export default function CreateRecipeModal() {
     };
 
     return (
-        <DialogContent className="sm:max-w-2xl overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl max-h-screen overflow-y-auto">
             <DialogHeader>
                 <DialogTitle>Create Recipe</DialogTitle>
                 <DialogDescription>Add a new recipe to your system.</DialogDescription>

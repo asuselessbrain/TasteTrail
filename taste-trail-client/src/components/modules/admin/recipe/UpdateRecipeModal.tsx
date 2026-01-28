@@ -96,7 +96,7 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
     }
 
     return (
-        <DialogContent className="sm:max-w-2xl overflow-y-auto">
+        <DialogContent className="sm:max-w-2xl max-h-screen overflow-y-auto">
             <DialogHeader>
                 <DialogTitle className="text-2xl font-bold text-gray-900">
                     Update Recipe

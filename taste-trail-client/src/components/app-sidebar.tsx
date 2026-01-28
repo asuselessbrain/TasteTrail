@@ -2,9 +2,18 @@
 
 import * as React from "react"
 import {
+  BarChart,
   BookOpen,
+  Calendar,
+  Clock,
   GalleryVerticalEnd,
+  Heart,
+  Home,
   LayoutDashboard,
+  Search,
+  ShoppingCart,
+  Star,
+  User,
 } from "lucide-react"
 
 import { NavMain } from "@/components/nav-main"
@@ -28,7 +37,7 @@ const data = {
   },
   teams:
   {
-    name: "Acme Inc",
+    name: "TasteTrail",
     logo: GalleryVerticalEnd,
     plan: "Enterprise",
   }
@@ -48,11 +57,51 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return null;
   }
 
-  const navStudent = [
+  const navUser = [
     {
-      title: "Overview",
-      url: "/student",
-      icon: LayoutDashboard
+      title: "Dashboard",
+      url: "/user",
+      icon: Home
+    },
+    {
+      title: "Recipes",
+      url: "/user/recipes",
+      icon: Search
+    },
+    {
+      title: "My Cookbook",
+      url: "/user/cookbook",
+      icon: Heart
+    },
+    {
+      title: "Meal Planner",
+      url: "/user/meal-planner",
+      icon: Calendar
+    },
+    {
+      title: "Cooking History",
+      url: "/user/cooking-history",
+      icon: Clock
+    },
+    {
+      title: "My Reviews",
+      url: "/user/reviews",
+      icon: Star
+    },
+    {
+      title: "Grocery List",
+      url: "/user/grocery-list",
+      icon: ShoppingCart
+    },
+    {
+      title: "Analytics",
+      url: "/user/analytics",
+      icon: BarChart
+    },
+    {
+      title: "Profile",
+      url: "/user/profile",
+      icon: User
     }
   ]
 
@@ -85,7 +134,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <TeamSwitcher teams={data.teams} />
       </SidebarHeader>
       <SidebarContent>
-        <NavMain items={user?.user?.role === "admin" ? navAdmin : navStudent} />
+        <NavMain items={user?.user?.role === "admin" ? navAdmin : navUser} />
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
