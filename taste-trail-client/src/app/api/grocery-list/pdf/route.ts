@@ -2,7 +2,9 @@ import { cookies } from "next/headers";
 import { NextResponse } from "next/server";
 
 export async function GET() {
-  const accessToken = (await cookies()).get("accessToken")?.value;
+  const cookieStore = await cookies();
+
+  const accessToken = cookieStore.get("accessToken")?.value;
 
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BASE_API}/grocery-list/pdf`,
@@ -11,13 +13,13 @@ export async function GET() {
       headers: {
         ...(accessToken ? { Authorization: accessToken } : {}),
       },
-    }
+    },
   );
 
   if (!res.ok) {
     return NextResponse.json(
       { message: "Failed to generate PDF" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 

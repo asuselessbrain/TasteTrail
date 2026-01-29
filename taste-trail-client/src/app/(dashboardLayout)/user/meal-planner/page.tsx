@@ -19,13 +19,9 @@ export default async function MealPlannerPage({
 
   const res = await getMealPlans({ weekStart: weekStart.toISOString() });
 
-  console.log("from mealPlanner", res)
-
   return (
     <div className="space-y-6">
       <h1 className="text-2xl font-bold">Meal Planner</h1>
-
-      {/* CLIENT COMPONENT */}
       <MealGrid mealPlans={res.data} weekStart={weekStart.toISOString()} />
     </div>
   );

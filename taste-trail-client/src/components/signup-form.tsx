@@ -185,7 +185,7 @@ export function SignupForm({ ...props }: React.ComponentProps<typeof Card>) {
               <Field>
                 <Button disabled={isSubmitting} type="submit">{isSubmitting ? "Creating Account..." : "Create Account"}</Button>
                 <FieldDescription className="px-6 text-center">
-                  Already have an account? <Link href="/login">Sign in</Link>
+                  Already have an account? <Link href="/">Sign in</Link>
                 </FieldDescription>
               </Field>
             </FieldGroup>

@@ -52,11 +52,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     currentUser();
   }, []);
 
-  console.log(currentUser);
-
   if (!mounted) {
     return null;
   }
+
+  console.log(currentUser)
 
   const data = {
     user: {

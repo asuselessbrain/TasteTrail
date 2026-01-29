@@ -10,7 +10,6 @@ interface RecipeCardProps {
 }
 
 export default function RecipeCard({ recipe }: RecipeCardProps) {
-    console.log(recipe)
     return (
         <div className="rounded-lg border border-gray-200 bg-white shadow-md hover:shadow-lg transition-shadow overflow-hidden">
             {/* Recipe Image */}

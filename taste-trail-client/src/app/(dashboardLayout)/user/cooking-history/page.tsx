@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PaginationComponent from "@/components/shared/PaginationComponent";
 import Searching from "@/components/shared/Searching";
-import { SortOption } from "@/types";
+import { ICookingHistory, SortOption } from "@/types";
 import ReusableSorting from "@/components/shared/ReusableSorting";
 
 export default async function CookingHistoryPage() {
@@ -51,7 +51,7 @@ export default async function CookingHistoryPage() {
                 <p className="text-3xl font-bold text-amber-600">
                   {(() => {
                     const totalMinutes = historyList.reduce(
-                      (sum: number, h: any) =>
+                      (sum: number, h: ICookingHistory) =>
                         sum + (h.recipeId?.cookingTime || 0),
                       0,
                     );
@@ -69,7 +69,7 @@ export default async function CookingHistoryPage() {
                   {
                     new Set(
                       historyList
-                        .map((h: any) => h.recipeId?.cuisineId?.name)
+                        .map((h: ICookingHistory) => h.recipeId?.cuisineId?.name)
                         .filter(Boolean),
                     ).size
                   }
@@ -96,7 +96,7 @@ export default async function CookingHistoryPage() {
         ) : (
           /* Timeline */
           <div className="space-y-6">
-            {historyList.map((history: any, index: number) => {
+            {historyList.map((history: ICookingHistory) => {
               const cookedDate = new Date(history.cookedDate);
               const formattedDate = cookedDate.toLocaleDateString("en-US", {
                 month: "short",

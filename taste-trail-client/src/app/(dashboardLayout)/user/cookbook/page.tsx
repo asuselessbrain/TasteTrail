@@ -3,7 +3,7 @@ import PaginationComponent from "@/components/shared/PaginationComponent";
 import ReusableSorting from "@/components/shared/ReusableSorting";
 import Searching from "@/components/shared/Searching";
 import { getMyFavorites } from "@/services/favoriteService";
-import { SortOption } from "@/types";
+import { IUserRecipe, SortOption } from "@/types";
 
 export default async function MyCookBook({
   searchParams,
@@ -67,7 +67,7 @@ export default async function MyCookBook({
             />
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {myCookBookList.map((cookBook) => (
+            {myCookBookList.map((cookBook: IUserRecipe) => (
               <RecipeCard key={cookBook._id} recipe={cookBook.recipeId} />
             ))}
           </div>

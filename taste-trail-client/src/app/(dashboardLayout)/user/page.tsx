@@ -2,6 +2,7 @@ import { getRecommendedRecipes } from "@/services/recipeService";
 import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { IRecipe } from "@/types";
 
 export default async function UserDashboard() {
   const res = await getRecommendedRecipes();
@@ -88,7 +89,7 @@ export default async function UserDashboard() {
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {recommendedRecipes.map((recipe: any) => (
+              {recommendedRecipes.map((recipe: IRecipe) => (
                 <div
                   key={recipe._id}
                   className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden group"
