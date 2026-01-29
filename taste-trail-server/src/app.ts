@@ -8,6 +8,7 @@ import { cuisineRoutes } from './modules/cuisine/cuisine.route';
 import { recipeRoutes } from './modules/recipe/recipe.route';
 import { reviewRoutes } from './modules/review/review.route';
 import { favoriteRoutes } from './modules/favorite/favorite.route';
+import { mealPlannerRoutes } from './modules/mealPlanner/mealPlanner.route';
 const app = express();
 
 app.use(express.json());
@@ -20,6 +21,7 @@ app.use('/api/v1/cuisines', cuisineRoutes)
 app.use('/api/v1/recipes', recipeRoutes)
 app.use('/api/v1/reviews', reviewRoutes)
 app.use('/api/v1/favorites', favoriteRoutes)
+app.use('/api/v1/meal-planner', mealPlannerRoutes)
 
 app.get('/', (req: Request, res: Response) => {
     res.json({

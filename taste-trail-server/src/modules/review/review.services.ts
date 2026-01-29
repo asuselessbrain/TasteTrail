@@ -62,7 +62,7 @@ const getApprovedReviewsByRecipeId = async (recipeId: string) => {
     return reviews;
 }
 
-export const totalAndAverageReviewsByRecipeId = async (recipeId: string) => {
+const totalAndAverageReviewsByRecipeId = async (recipeId: string) => {
     const result = await Review.aggregate([
         {
             $match: {
@@ -86,6 +86,7 @@ export const totalAndAverageReviewsByRecipeId = async (recipeId: string) => {
             : 0,
     };
 };
+
 
 export const reviewServices = {
     createReview,

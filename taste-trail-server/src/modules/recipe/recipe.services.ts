@@ -3,46 +3,55 @@ import { Recipe } from "./recipe.medel";
 import { IRecipe } from "./recipe.type";
 
 const createRecipe = async (data: IRecipe) => {
-    const recipe = new Recipe(data);
+  const recipe = new Recipe(data);
 
-    return await recipe.save()
-}
+  return await recipe.save();
+};
 
 const getAllRecipes = async (options: Record<string, any>) => {
+  const { filters, search, sortBy, sortOrder, page, limit } = options;
 
-    const { filters, search, sortBy, sortOrder, page, limit } = options;
-
-    const recipes = await queryBuilder(Recipe, {
-        filters,
-        search,
-        searchFields: ['name', 'description'],
-        sortBy,
-        sortOrder,
-        page,
-        limit,
-        populate: ["categoryId", "cuisineId"]
-    })
-    return recipes;
-}
+  const recipes = await queryBuilder(Recipe, {
+    filters,
+    search,
+    searchFields: ["name", "description"],
+    sortBy,
+    sortOrder,
+    page,
+    limit,
+    populate: ["categoryId", "cuisineId"],
+  });
+  return recipes;
+};
 
 const updateRecipe = async (id: string, data: Partial<IRecipe>) => {
-    const updateRecipe = await Recipe.findByIdAndUpdate(id, data, { new: true });
-    return updateRecipe
-}
+  const updateRecipe = await Recipe.findByIdAndUpdate(id, data, { new: true });
+  return updateRecipe;
+};
 
 const deleteRecipe = async (id: string) => {
-    const deleteRecipe = await Recipe.findByIdAndDelete(id);
-    return deleteRecipe
-}
+  const deleteRecipe = await Recipe.findByIdAndDelete(id);
+  return deleteRecipe;
+};
 
-const getSingleRecipe = async (id:string) => {
-    const recipe = await Recipe.findById(id).populate(["categoryId", "cuisineId"]);
-    return recipe;
-}
+const getSingleRecipe = async (id: string) => {
+  const recipe = await Recipe.findById(id).populate([
+    "categoryId",
+    "cuisineId",
+  ]);
+  return recipe;
+};
+
+const getAllRecipesForMealPlan = async () => {
+  const recipes = await Recipe.find().populate(["categoryId", "cuisineId"]);
+  return recipes;
+};
+
 export const recipeServices = {
-    createRecipe,
-    getAllRecipes,
-    updateRecipe,
-    deleteRecipe,
-    getSingleRecipe
+  createRecipe,
+  getAllRecipes,
+  updateRecipe,
+  deleteRecipe,
+  getSingleRecipe,
+  getAllRecipesForMealPlan
 };

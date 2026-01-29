@@ -65,10 +65,21 @@ const getSingleRecipe = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getAllRecipesForMealPlan = catchAsync(async (req: Request, res: Response) => {
+
+  const result = await recipeServices.getAllRecipesForMealPlan()
+  responser(res, {
+    statusCode: 200,
+    message: 'Recipes for meal plan retrieved successfully',
+    data: result,
+  });
+});
+
 export const recipeController = {
   createRecipe,
   getAllRecipes,
   updateRecipe,
   deleteRecipe,
-  getSingleRecipe
+  getSingleRecipe,
+  getAllRecipesForMealPlan
 };
