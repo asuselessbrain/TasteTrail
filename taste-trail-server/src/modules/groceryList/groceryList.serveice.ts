@@ -88,7 +88,6 @@ const makeGroceryListPurchased = async (
     weekStart: currentWeekStart,
   });
 
-  console.log(updatedGroceryList);
 
   return updatedGroceryList;
 };

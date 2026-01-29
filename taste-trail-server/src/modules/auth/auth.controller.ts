@@ -1,24 +1,15 @@
-import { Request, Response } from 'express';
-import { responser } from '../../utils/responser';
-import { catchAsync } from '../../utils/catchAsync';
-import { AuthService } from './auth.service';
-import config from '../../config';
-import { CookieOptions } from 'express';
-
-const cookieOptions: CookieOptions = {
-  secure: config.node_env === 'production',
-  httpOnly: true,
-  sameSite: config.node_env === 'production' ? "none" : "lax",
-  maxAge: 1000 * 60 * 60 * 24 * 30,
-};
-
+import { Request, Response } from "express";
+import { responser } from "../../utils/responser";
+import { catchAsync } from "../../utils/catchAsync";
+import { AuthService } from "./auth.service";
+import config from "../../config";
 
 const register = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.register(req.body);
 
   responser(res, {
     statusCode: 201,
-    message: 'Registration Successful',
+    message: "Registration Successful",
     data: {
       email: result,
     },
@@ -28,27 +19,38 @@ const register = catchAsync(async (req: Request, res: Response) => {
 const login = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.login(req.body);
 
-  res.cookie('accessToken', result?.token, cookieOptions);
+  res.cookie("accessToken", result?.token, {
+    secure: config.node_env === "production", // প্রোডাকশনে true, লোকালে false (যদি https না থাকে)
+    httpOnly: true,
+    sameSite: config.node_env === "production" ? "none" : "lax", // ক্রস-অরিজিন এর জন্য 'none' জরুরি
+    maxAge: 1000 * 60 * 60 * 24 * 365, // ১ বছর (অথবা আপনার প্রয়োজন মতো সময় দিন)
+    path: "/",
+  });
 
   responser(res, {
     statusCode: 200,
-    message: 'Login Successful',
+    message: "Login Successful",
     data: result,
   });
 });
 
 const logout = catchAsync(async (req: Request, res: Response) => {
-
   const result = await AuthService.logout();
 
-  res.clearCookie("accessToken", cookieOptions);
+  res.clearCookie("accessToken", {
+    secure: config.node_env === "production", // প্রোডাকশনে true, লোকালে false (যদি https না থাকে)
+    httpOnly: true,
+    sameSite: config.node_env === "production" ? "none" : "lax", // ক্রস-অরিজিন এর জন্য 'none' জরুরি
+    maxAge: 1000 * 60 * 60 * 24 * 365, // ১ বছর (অথবা আপনার প্রয়োজন মতো সময় দিন)
+    path: "/",
+  });
 
   responser(res, {
     statusCode: 200,
     message: "Logout successful",
-    data: result
+    data: result,
   });
-})
+});
 
 const getCurrentUser = catchAsync(async (req: Request, res: Response) => {
   const user = req.user;
@@ -57,14 +59,13 @@ const getCurrentUser = catchAsync(async (req: Request, res: Response) => {
   responser(res, {
     statusCode: 200,
     message: "Current user retrieved successfully",
-    data: result
+    data: result,
   });
 });
-
 
 export const AuthControllers = {
   register,
   login,
   logout,
-  getCurrentUser
+  getCurrentUser,
 };
