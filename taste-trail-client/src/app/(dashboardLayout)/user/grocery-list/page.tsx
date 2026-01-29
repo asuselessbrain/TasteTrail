@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import GroceryCard from "@/components/modules/user/grocery/GroceryCard";
 import { generateGroceryList } from "@/services/groceryService";
+import { Download } from "lucide-react";
+import DownloadButton from "@/components/modules/user/grocery/DownloadButton";
 
 interface GroceryItem {
   name: string;
@@ -22,18 +24,21 @@ export default async function GenerateGroceryListPage() {
   return (
     <div className="min-h-screen p-8">
       <div className="max-w-360 mx-auto">
-        {/* Header */}
-        <div className="mb-12">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">
-            🛒 Grocery List
-          </h1>
-          <p className="text-lg text-gray-600">
-            Items needed for your meal plan
-          </p>
-          <div className="w-24 h-1 bg-gradient-to-r from-orange-500 to-amber-500 mt-4 rounded-full"></div>
+        <div className="mb-12 flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div>
+            <h1 className="text-4xl font-bold text-gray-900 mb-2">
+              🛒 Grocery List
+            </h1>
+            <p className="text-lg text-gray-600">
+              Items needed for your meal plan
+            </p>
+          </div>
+
+          <div className="self-start md:self-center">
+            <DownloadButton />
+          </div>
         </div>
 
-        {/* Empty State */}
         {!groceryList || groceryList.length === 0 ? (
           <div className="bg-white rounded-lg shadow-md p-12 text-center">
             <p className="text-xl text-gray-500 mb-6">
@@ -49,7 +54,7 @@ export default async function GenerateGroceryListPage() {
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <p className="text-sm text-gray-600">Total Items</p>
-                <p className="text-3xl font-bold text-orange-600">
+                <p className="text-3xl font-bold">
                   {groceryListCount}
                 </p>
               </div>
@@ -79,7 +84,7 @@ export default async function GenerateGroceryListPage() {
               </div>
               <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
                 <div
-                  className="bg-gradient-to-r from-orange-500 to-amber-500 h-full transition-all duration-300"
+                  className="bg-green-500 h-full transition-all duration-300"
                   style={{
                     width: `${(purchasedCount / groceryList.length) * 100}%`,
                   }}
@@ -110,7 +115,7 @@ export default async function GenerateGroceryListPage() {
             {/* Grocery List */}
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="divide-y">
-                {groceryList.map((item:GroceryItem, index: number) => (
+                {groceryList.map((item: GroceryItem, index: number) => (
                   <GroceryCard key={index} item={item} index={index} />
                 ))}
               </div>

@@ -7,5 +7,6 @@ const router = Router();
 
 router.get('/', auth(USER_ROLE.user), groceryListController.generateGroceryList)
 router.patch('/purchase', auth(USER_ROLE.user), groceryListController.makeGroceryListPurchased)
+router.get('/pdf', auth(USER_ROLE.user), groceryListController.generateGroceryListPDF)
 
 export const groceryListRoutes = router;

@@ -1,6 +1,6 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   BarChart,
   BookOpen,
@@ -13,39 +13,30 @@ import {
   Search,
   ShoppingCart,
   Star,
-  User,
-} from "lucide-react"
+} from "lucide-react";
 
-import { NavMain } from "@/components/nav-main"
-import { NavUser } from "@/components/nav-user"
-import { TeamSwitcher } from "@/components/team-switcher"
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
+import { TeamSwitcher } from "@/components/team-switcher";
 import {
   Sidebar,
   SidebarContent,
   SidebarFooter,
   SidebarHeader,
   SidebarRail,
-} from "@/components/ui/sidebar"
-import { useUser } from "@/context/UserContext"
+} from "@/components/ui/sidebar";
+import { useUser } from "@/context/UserContext";
+import { getCurrentUserDetails } from "@/services/authService";
 
 // This is sample data.
-const data = {
-  user: {
-    name: "Arfan Ahmed",
-    email: "arfan@gmail.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  teams:
-  {
-    name: "TasteTrail",
-    logo: GalleryVerticalEnd,
-    plan: "Enterprise",
-  }
-}
-
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
-  const user = useUser()
+  const user = useUser();
+  const [currentUser, setCurrentUser] = React.useState<{
+    fullName?: string;
+    email?: string;
+    profilePhoto?: string;
+  } | null>(null);
 
   const [mounted, setMounted] = React.useState(false);
 
@@ -53,80 +44,93 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     setMounted(true);
   }, []);
 
+  React.useEffect(() => {
+    const currentUser = async () => {
+      const res = await getCurrentUserDetails();
+      setCurrentUser(res.data);
+    };
+    currentUser();
+  }, []);
+
+  console.log(currentUser);
+
   if (!mounted) {
     return null;
   }
+
+  const data = {
+    user: {
+      name: `${currentUser?.fullName}` || "Arfan",
+      email: `${currentUser?.email}` || "arfan@gmail.com",
+      image: `${currentUser?.profilePhoto}`,
+    },
+    teams: {
+      name: "TasteTrail",
+      logo: GalleryVerticalEnd,
+      plan: "Enterprise",
+    },
+  };
 
   const navUser = [
     {
       title: "Dashboard",
       url: "/user",
-      icon: Home
+      icon: Home,
     },
     {
       title: "Recipes",
       url: "/user/recipes",
-      icon: Search
+      icon: Search,
     },
     {
       title: "My Cookbook",
       url: "/user/cookbook",
-      icon: Heart
+      icon: Heart,
     },
     {
       title: "Meal Planner",
       url: "/user/meal-planner",
-      icon: Calendar
+      icon: Calendar,
     },
     {
       title: "Cooking History",
       url: "/user/cooking-history",
-      icon: Clock
+      icon: Clock,
     },
     {
       title: "Grocery List",
       url: "/user/grocery-list",
-      icon: ShoppingCart
+      icon: ShoppingCart,
     },
-    {
-      title: "Analytics",
-      url: "/user/analytics",
-      icon: BarChart
-    },
-    {
-      title: "Profile",
-      url: "/user/profile",
-      icon: User
-    }
-  ]
+  ];
 
   const navAdmin = [
     {
       title: "Overview",
       url: "/admin",
-      icon: LayoutDashboard
+      icon: LayoutDashboard,
     },
     {
       title: "Manage Categories",
       url: "/admin/manage-category",
-      icon: BookOpen
+      icon: BookOpen,
     },
     {
       title: "Manage Cuisines",
       url: "/admin/manage-cuisine",
-      icon: GalleryVerticalEnd
+      icon: GalleryVerticalEnd,
     },
     {
       title: "Manage Recipes",
       url: "/admin/manage-recipe",
-      icon: BookOpen
+      icon: BookOpen,
     },
     {
       title: "Reviews",
       url: "/admin/reviews",
-      icon: Star
-    }
-  ]
+      icon: Star,
+    },
+  ];
 
   return (
     <Sidebar collapsible="icon" {...props}>
@@ -141,5 +145,5 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }

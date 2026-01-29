@@ -2,6 +2,7 @@ import AppError from "../../errors/AppError";
 import { User } from "../auth/auth.model";
 import { MealPlanner } from "../mealPlanner/mealPlanner.model";
 import { GroceryList } from "./groceryList.model";
+import PDFDocument from "pdfkit";
 
 function getCurrentWeekStart(): Date {
   const today = new Date();
@@ -92,7 +93,46 @@ const makeGroceryListPurchased = async (
   return updatedGroceryList;
 };
 
+const generateGroceryListPDF = async (email: string) => {
+   const user = await User.findOne({ email });
+  if (!user) throw new AppError(404, "User not found");
+
+  const currentWeekStart = getCurrentWeekStart();
+
+  const groceryList = await GroceryList.findOne({
+    userId: user._id,
+    weekStart: currentWeekStart,
+  });
+
+  if (!groceryList) throw new AppError(404, "Grocery list not found");
+
+  // Create PDFDocument
+  const doc = new PDFDocument({ margin: 30, size: "A4" });
+
+  // Title
+  doc.fontSize(20).text("🛒 Grocery List", { align: "center" });
+  doc.moveDown(1);
+
+  // Week info
+  doc
+    .fontSize(12)
+    .text(`Week starting: ${currentWeekStart.toDateString()}`, {
+      align: "center",
+    });
+  doc.moveDown(2);
+
+  // List items
+  groceryList.items.forEach((item, index) => {
+    const status = item.purchased ? "✅ Purchased" : "❌ Not purchased";
+    doc.fontSize(14).text(`${index + 1}. ${item.name} - ${status}`);
+  });
+
+  // Return PDFDocument (stream)
+  return doc;
+};
+
 export const groceryListServices = {
   generateGroceryList,
   makeGroceryListPurchased,
+  generateGroceryListPDF,
 };

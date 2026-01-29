@@ -1,36 +1,38 @@
-import bcrypt from 'bcrypt';
-import jwt from 'jsonwebtoken';
-import config from '../../config';
-import { IUser } from './auth.type';
-import { User } from './auth.model';
-import AppError from '../../errors/AppError';
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+import config from "../../config";
+import { IUser } from "./auth.type";
+import { User } from "./auth.model";
+import AppError from "../../errors/AppError";
 import { StringValue } from "ms";
 
 const register = async (payload: IUser) => {
-
-  const isEmailExist = await User.findOne({ email: payload.email })
+  const isEmailExist = await User.findOne({ email: payload.email });
 
   if (isEmailExist) {
-    throw new AppError(409, "User with this email already exists")
+    throw new AppError(409, "User with this email already exists");
   }
-  const hashedPassword = await bcrypt.hash(payload.password, Number(config.bcrypt_salt_rounds))
+  const hashedPassword = await bcrypt.hash(
+    payload.password,
+    Number(config.bcrypt_salt_rounds),
+  );
   const userData = {
     fullName: payload.fullName,
     email: payload.email,
     password: hashedPassword,
-    profilePhoto: payload.profilePhoto
-  }
+    profilePhoto: payload.profilePhoto,
+  };
   const user = new User(userData);
   return user.save();
 };
 
 const login = async (payload: { email: string; password: string }) => {
   const user = await User.findOne({ email: payload?.email }).select(
-    '+password',
+    "+password",
   );
 
   if (!user) {
-    throw new Error('user not found !');
+    throw new Error("user not found !");
   }
 
   //checking if the password is correct
@@ -40,7 +42,7 @@ const login = async (payload: { email: string; password: string }) => {
   );
 
   if (!isPasswordMatched) {
-    throw new Error('Wrong Password!!! 😈');
+    throw new Error("Wrong Password!!! 😈");
   }
 
   const jwtPayload = {
@@ -55,13 +57,21 @@ const login = async (payload: { email: string; password: string }) => {
   return { token, user };
 };
 
-const logout = async () => {
-  return null
-}
+const getCurrentUser = async (email: string) => {
+  const user = await User.findOne({ email });
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+  return user;
+};
 
+const logout = async () => {
+  return null;
+};
 
 export const AuthService = {
   register,
   login,
-  logout
+  logout,
+  getCurrentUser,
 };

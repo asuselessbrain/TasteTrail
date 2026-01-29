@@ -29,7 +29,24 @@ const makeGroceryListPurchased = catchAsync(
   },
 );
 
+const generateGroceryListPDF = catchAsync(
+  async (req: Request, res: Response) => {
+    const user = req.user;
+    const pdfDoc = await groceryListServices.generateGroceryListPDF(
+      user?.email,
+    );
+    res.setHeader("Content-Type", "application/pdf");
+    res.setHeader(
+      "Content-Disposition",
+      "attachment; filename=grocery-list.pdf",
+    );
+    pdfDoc.pipe(res);
+    pdfDoc.end();
+  },
+);
+
 export const groceryListController = {
   generateGroceryList,
   makeGroceryListPurchased,
+  generateGroceryListPDF,
 };

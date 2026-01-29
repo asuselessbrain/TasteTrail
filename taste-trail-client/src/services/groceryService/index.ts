@@ -1,4 +1,4 @@
-"use server"
+"use server";
 import { baseApi } from "../baseApi";
 import { revalidateTag } from "next/cache";
 
