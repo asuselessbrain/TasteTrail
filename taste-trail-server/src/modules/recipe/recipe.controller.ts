@@ -17,6 +17,7 @@ const createRecipe = catchAsync(async (req: Request, res: Response) => {
 
 const getAllRecipes = catchAsync(async (req: Request, res: Response) => {
   const options = req.query;
+  console.log(options)
 
   const result = await recipeServices.getAllRecipes(options);
 

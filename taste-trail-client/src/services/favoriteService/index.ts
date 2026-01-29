@@ -1,6 +1,7 @@
 "use server";
 import { revalidateTag } from "next/cache";
 import { baseApi } from "../baseApi";
+import { QueryParams } from "@/types";
 
 export const createFavorite = async (recipeId: string) => {
   try {
@@ -15,9 +16,19 @@ export const createFavorite = async (recipeId: string) => {
   }
 };
 
-export const getMyFavorites = async () => {
+export const getMyFavorites = async (queryParams?: QueryParams) => {
+  const params = new URLSearchParams();
+
+  if (queryParams) {
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        params.append(key, String(value));
+      }
+    });
+  }
+
   try {
-    const res = await baseApi("/favorites", {
+    const res = await baseApi(`/favorites?${params.toString()}`, {
       method: "GET",
       next: {
         tags: ["favorite"],

@@ -1,38 +1,56 @@
-import { getAllReviews } from "@/services/review"
-import ReviewsTable from "@/components/modules/admin/reviews/ReviewsTable"
+import { getAllReviews } from "@/services/review";
+import ReviewsTable from "@/components/modules/admin/reviews/ReviewsTable";
 
 interface Review {
-    _id: string
-    userId: {
-        _id: string
-        name: string
-        email: string
-    }
-    recipeId: {
-        _id: string
-        name: string
-    }
-    rating: number
-    comment: string
-    status: "pending" | "approved" | "rejected"
-    createdAt: string
+  _id: string;
+  userId: {
+    _id: string;
+    name: string;
+    email: string;
+  };
+  recipeId: {
+    _id: string;
+    name: string;
+  };
+  rating: number;
+  comment: string;
+  status: "pending" | "approved" | "rejected";
+  createdAt: string;
 }
 
-export default async function ReviewsPage() {
+export default async function ReviewsPage({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    page?: string;
+    search?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
+  }>;
+}) {
+  const params = await searchParams;
 
-    const reviews = await getAllReviews()
+  const page = Number(params.page ?? 1);
+  const limit = 10;
+  
+  const reviews = await getAllReviews();
 
-    const reviewList = reviews.data
+  const reviewList = reviews.data;
 
-    return (
-        <div className="space-y-8 max-w-360 w-full mx-auto">
-            {/* Header */}
-            <div>
-                <h1 className="text-3xl font-bold text-gray-900 mb-2">Reviews Management</h1>
-                <p className="text-gray-600">Approve, reject, or manage user reviews for recipes</p>
-            </div>
+  return (
+    <div className="space-y-8 max-w-360 w-full mx-auto">
+      {/* Header */}
+      <div>
+        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+          Reviews Management
+        </h1>
+        <p className="text-gray-600">
+          Approve, reject, or manage user reviews for recipes
+        </p>
+      </div>
 
-            <ReviewsTable reviews={reviewList} />
-        </div>
-    )
+      <ReviewsTable reviews={reviewList} meta={reviews.meta} />
+    </div>
+  );
 }

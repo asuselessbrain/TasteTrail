@@ -1,8 +1,30 @@
 import RecipeCard from "@/components/modules/user/recipe/RecipeCard";
+import PaginationComponent from "@/components/shared/PaginationComponent";
 import { getMyFavorites } from "@/services/favoriteService";
 
-export default async function MyCookBook() {
-  const myCookBook = await getMyFavorites();
+export default async function MyCookBook({
+  searchParams,
+}: {
+  searchParams: Promise<{
+    page?: string;
+    search?: string;
+    status?: string;
+    sortBy?: string;
+    sortOrder?: "asc" | "desc";
+  }>;
+}) {
+  const params = await searchParams;
+  const page = Number(params.page ?? 1);
+  const limit = 12;
+
+  const queryParams = {
+    search: params.search,
+    sortBy: params.sortBy,
+    sortOrder: params.sortOrder,
+    page,
+    limit,
+  };
+  const myCookBook = await getMyFavorites(queryParams);
   const myCookBookList = myCookBook?.data || [];
 
   return (
@@ -17,11 +39,16 @@ export default async function MyCookBook() {
 
       {myCookBookList.length > 0 ? (
         /* Grid Layout */
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-          {myCookBookList.map((cookBook) => (
-            <RecipeCard key={cookBook._id} recipe={cookBook.recipeId} />
-          ))}
-        </div>
+        <>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {myCookBookList.map((cookBook) => (
+              <RecipeCard key={cookBook._id} recipe={cookBook.recipeId} />
+            ))}
+          </div>
+          <div className="mt-10">
+            <PaginationComponent totalPage={myCookBook?.meta?.totalPages} />
+          </div>
+        </>
       ) : (
         /* Empty State */
         <div className="flex justify-center items-center py-20">

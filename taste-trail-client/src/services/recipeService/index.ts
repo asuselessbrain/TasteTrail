@@ -3,6 +3,7 @@
 import { FieldValues } from "react-hook-form";
 import { baseApi } from "../baseApi";
 import { revalidateTag } from "next/cache";
+import { QueryParams } from "@/types";
 
 export const createRecipe = async (data: FieldValues) => {
   try {
@@ -17,9 +18,18 @@ export const createRecipe = async (data: FieldValues) => {
   }
 };
 
-export const getAllRecipes = async () => {
+export const getAllRecipes = async (queryParams?: QueryParams) => {
+  const params = new URLSearchParams();
+
+  if (queryParams) {
+    Object.entries(queryParams).forEach(([key, value]) => {
+      if (value !== undefined && value !== null && value !== "") {
+        params.append(key, String(value));
+      }
+    });
+  }
   try {
-    const res = await baseApi("/recipes", {
+    const res = await baseApi(`/recipes?${params.toString()}`, {
       method: "GET",
       next: {
         tags: ["recipes"],
