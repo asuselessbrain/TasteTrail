@@ -145,7 +145,7 @@ export default async function UserDashboard() {
 
                     {/* Action Button */}
                     <Link href={`/user/recipes/${recipe._id}`}>
-                      <Button className="w-full bg-orange-500 hover:bg-orange-600">
+                      <Button className="w-full">
                         View Recipe
                       </Button>
                     </Link>

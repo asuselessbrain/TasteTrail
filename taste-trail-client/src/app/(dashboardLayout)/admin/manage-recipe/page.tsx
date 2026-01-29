@@ -1,5 +1,6 @@
 import CreateRecipeModal from "@/components/modules/admin/recipe/CreateRecipeModal";
 import RecipeTable from "@/components/modules/admin/recipe/RecipeTable";
+import Searching from "@/components/shared/Searching";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { getAllRecipes } from "@/services/recipeService";
@@ -30,6 +31,7 @@ export default async function ManageRecipePage({
   };
 
   const recipes = await getAllRecipes(queryParams);
+  console.log(recipes)
   return (
     <div className="max-w-360 w-full mx-auto">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
@@ -53,6 +55,7 @@ export default async function ManageRecipePage({
         </Dialog>
       </div>
 
+      <Searching placeholder="Search recipe name..." />
       <RecipeTable recipes={recipes.data} meta={recipes.meta} />
     </div>
   );

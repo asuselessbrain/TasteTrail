@@ -34,27 +34,28 @@ const getMyFavorite = async (email: string, options: Record<string, any>) => {
     throw new AppError(404, "User not found");
   }
 
-  const { filters, search, sortBy, sortOrder, page, limit } = options;
+  const { search, sortBy, sortOrder, page, limit } = options;
 
-  const favorites = await queryBuilder(Favorite, {
-    filters: { ...filters, userId: user._id },
+  return await queryBuilder(Favorite, {
+    filters: { userId: user._id.toString() },
     search,
     searchFields: [],
+    searchInPopulate: [
+      { path: "recipeId", field: "name" },
+      { path: "recipeId.categoryId", field: "name" },
+      { path: "recipeId.cuisineId", field: "name" },
+    ],
     sortBy,
     sortOrder,
     page,
     limit,
-    populate: [
-      {
-        path: "recipeId",
-        populate: [
-          { path: "categoryId", select: "name" },
-          { path: "cuisineId", select: "name" },
-        ],
-      },
-    ],
+    populate: ["recipeId", "recipeId.categoryId", "recipeId.cuisineId"],
+    populateCollectionNames: {
+      recipeId: "recipes",
+      "recipeId.categoryId": "categories",
+      "recipeId.cuisineId": "cuisines",
+    },
   });
-  return favorites;
 };
 
 const getAlreadyFavorite = async (email: string, recipeId: string) => {

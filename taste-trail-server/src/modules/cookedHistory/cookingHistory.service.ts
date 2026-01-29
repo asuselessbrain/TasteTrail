@@ -14,14 +14,23 @@ const getMyCookingHistory = async (
   }
 
   const history = await queryBuilder(CookingHistory, {
-    filters: { userId: user._id, ...query.filters },
+    filters: { userId: user._id.toString(), ...query.filters },
     search: query.search,
-    searchFields: [],
-    sortBy: "cookedDate",
-    sortOrder: "desc",
-    populate: {
-      path: "recipeId",
-      populate: [{ path: "categoryId" }, { path: "cuisineId" }],
+    searchFields: ["day"],
+    searchInPopulate: [
+      { path: "recipeId", field: "name" },  
+      { path: "recipeId.categoryId", field: "name" },
+      { path: "recipeId.cuisineId", field: "name" }, 
+    ],
+    sortBy: query.sortBy || "cookedDate",
+    sortOrder: query.sortOrder || "desc",
+    page: query.page,
+    limit: query.limit,
+    populate: ["recipeId", "recipeId.categoryId", "recipeId.cuisineId"],
+    populateCollectionNames: {
+      "recipeId": "recipes",
+      "recipeId.categoryId": "categories",
+      "recipeId.cuisineId": "cuisines",
     },
   });
 

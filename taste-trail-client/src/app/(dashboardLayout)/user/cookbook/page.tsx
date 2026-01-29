@@ -1,5 +1,6 @@
 import RecipeCard from "@/components/modules/user/recipe/RecipeCard";
 import PaginationComponent from "@/components/shared/PaginationComponent";
+import Searching from "@/components/shared/Searching";
 import { getMyFavorites } from "@/services/favoriteService";
 
 export default async function MyCookBook({
@@ -27,6 +28,8 @@ export default async function MyCookBook({
   const myCookBook = await getMyFavorites(queryParams);
   const myCookBookList = myCookBook?.data || [];
 
+  console.log(myCookBook)
+
   return (
     <div className="max-w-7xl mx-auto w-full px-4 py-8">
       {/* Header */}
@@ -40,6 +43,7 @@ export default async function MyCookBook({
       {myCookBookList.length > 0 ? (
         /* Grid Layout */
         <>
+        <Searching placeholder="Search recipe name category or cuisine..." />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {myCookBookList.map((cookBook) => (
               <RecipeCard key={cookBook._id} recipe={cookBook.recipeId} />

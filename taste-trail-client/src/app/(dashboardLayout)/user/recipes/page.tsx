@@ -2,6 +2,7 @@ import { getAllRecipes } from "@/services/recipeService";
 import RecipeCard from "@/components/modules/user/recipe/RecipeCard";
 import { IRecipe } from "@/types";
 import PaginationComponent from "@/components/shared/PaginationComponent";
+import Searching from "@/components/shared/Searching";
 
 export default async function RecipesPage({
   searchParams,
@@ -42,6 +43,7 @@ export default async function RecipesPage({
       {recipeList.length > 0 ? (
         /* Grid Layout */
         <>
+          <Searching placeholder="Search recipe name category or cuisine..." />
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {recipeList.map((recipe: IRecipe) => (
               <RecipeCard key={recipe._id} recipe={recipe} />

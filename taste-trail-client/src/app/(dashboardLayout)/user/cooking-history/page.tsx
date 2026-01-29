@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PaginationComponent from "@/components/shared/PaginationComponent";
+import Searching from "@/components/shared/Searching";
 
 export default async function CookingHistoryPage() {
   const cookingHistory = await getMyCookingHistory();
@@ -95,7 +96,8 @@ export default async function CookingHistoryPage() {
               });
 
               return (
-                <>
+                <div key={history._id}>
+                  <Searching placeholder="Search recipe name category or cuisine..." />
                   <div
                     key={history._id}
                     className="relative pl-8 pb-8 border-l-2 border-orange-300 last:border-l-0"
@@ -169,18 +171,18 @@ export default async function CookingHistoryPage() {
 
                           {/* Action Button */}
                           <Link href={`/user/recipes/${history.recipeId?._id}`}>
-                            <Button className="bg-orange-500 hover:bg-orange-600">
-                              View Recipe Details
-                            </Button>
+                            <Button>View Recipe Details</Button>
                           </Link>
                         </div>
                       </div>
                     </div>
                   </div>
                   <div>
-                    <PaginationComponent totalPage={cookingHistory?.meta?.totalPages} />
+                    <PaginationComponent
+                      totalPage={cookingHistory?.meta?.totalPages}
+                    />
                   </div>
-                </>
+                </div>
               );
             })}
           </div>

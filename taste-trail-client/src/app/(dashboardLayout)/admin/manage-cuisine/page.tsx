@@ -1,5 +1,6 @@
 import CreateCuisineModal from "@/components/modules/admin/cuisine/CreateCuisineModal";
 import CuisineTable from "@/components/modules/admin/cuisine/CuisineTable";
+import Searching from "@/components/shared/Searching";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { getAllCuisines } from "@/services/CuisineService";
@@ -25,8 +26,8 @@ export default async function ManageCuisinePage({
     sortBy: params.sortBy,
     sortOrder: params.sortOrder,
     page,
-    limit
-  }
+    limit,
+  };
 
   const cuisines = await getAllCuisines(queryParams);
 
@@ -52,7 +53,7 @@ export default async function ManageCuisinePage({
           <CreateCuisineModal />
         </Dialog>
       </div>
-
+      <Searching placeholder="Search cuisine name..." />
       <CuisineTable cuisines={cuisines.data} meta={cuisines.meta} />
     </div>
   );

@@ -14,21 +14,25 @@ const createRecipe = async (data: IRecipe) => {
 };
 
 const getAllRecipes = async (options: Record<string, any>) => {
-  const { filters, search, sortBy, sortOrder, page, limit } = options;
-
-  const recipes = await queryBuilder(Recipe, {
-    filters,
-    search,
+  return await queryBuilder(Recipe, {
+    filters: options.filters,
+    search: options.search,
     searchFields: ["name", "description"],
-    sortBy,
-    sortOrder,
-    page,
-    limit,
+    sortBy: options.sortBy,
+    sortOrder: options.sortOrder,
+    page: options.page,
+    limit: options.limit,
     populate: ["categoryId", "cuisineId"],
+    searchInPopulate: [
+      { path: "categoryId", field: "name" },
+      { path: "cuisineId", field: "name" },
+    ],
+    populateCollectionNames: {
+      categoryId: "categories",
+      cuisineId: "cuisines",
+    },
   });
-  return recipes;
 };
-
 const updateRecipe = async (id: string, data: Partial<IRecipe>) => {
   const updateRecipe = await Recipe.findByIdAndUpdate(id, data, { new: true });
   return updateRecipe;

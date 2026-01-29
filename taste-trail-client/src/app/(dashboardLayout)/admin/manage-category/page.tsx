@@ -1,5 +1,6 @@
 import CategoryTable from "@/components/modules/admin/category/CategoryTable";
 import CreateCategoryModal from "@/components/modules/admin/category/CreateCategoryModal";
+import Searching from "@/components/shared/Searching";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { getAllCategories } from "@/services/categoryService";
@@ -52,6 +53,8 @@ export default async function ManageCategoryPage({
           <CreateCategoryModal />
         </Dialog>
       </div>
+
+      <Searching placeholder="Search category name..." />
 
       <CategoryTable categories={categories.data} meta={categories.meta} />
     </div>
