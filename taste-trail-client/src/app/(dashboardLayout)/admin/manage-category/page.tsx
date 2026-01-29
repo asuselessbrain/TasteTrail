@@ -1,9 +1,11 @@
 import CategoryTable from "@/components/modules/admin/category/CategoryTable";
 import CreateCategoryModal from "@/components/modules/admin/category/CreateCategoryModal";
+import ReusableSorting from "@/components/shared/ReusableSorting";
 import Searching from "@/components/shared/Searching";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { getAllCategories } from "@/services/categoryService";
+import { SortOption } from "@/types";
 import { Plus } from "lucide-react";
 
 export default async function ManageCategoryPage({
@@ -27,9 +29,16 @@ export default async function ManageCategoryPage({
     sortBy: params.sortBy,
     sortOrder: params.sortOrder,
     page,
-    limit
-  }
+    limit,
+  };
   const categories = await getAllCategories(queryParams);
+
+  const sortOptions: SortOption[] = [
+    { label: "Name (A → Z)", value: "name-asc" },
+    { label: "Name (Z → A)", value: "name-desc" },
+    { label: "Oldest first", value: "createdAt-asc" },
+    { label: "Newest first", value: "createdAt-desc" },
+  ];
 
   return (
     <div className="max-w-360 w-full mx-auto">
@@ -54,7 +63,21 @@ export default async function ManageCategoryPage({
         </Dialog>
       </div>
 
-      <Searching placeholder="Search category name..." />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+        <Searching
+          placeholder="Search category name..."
+        />
+
+        <ReusableSorting
+          options={sortOptions}
+          defaultValue={
+            params.sortBy && params.sortOrder
+              ? `${params.sortBy}-${params.sortOrder}`
+              : undefined
+          }
+          className="w-full sm:w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition cursor-pointer"
+        />
+      </div>
 
       <CategoryTable categories={categories.data} meta={categories.meta} />
     </div>

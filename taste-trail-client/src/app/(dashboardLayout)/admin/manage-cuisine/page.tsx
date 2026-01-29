@@ -1,9 +1,11 @@
 import CreateCuisineModal from "@/components/modules/admin/cuisine/CreateCuisineModal";
 import CuisineTable from "@/components/modules/admin/cuisine/CuisineTable";
+import ReusableSorting from "@/components/shared/ReusableSorting";
 import Searching from "@/components/shared/Searching";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { getAllCuisines } from "@/services/CuisineService";
+import { SortOption } from "@/types";
 import { Plus } from "lucide-react";
 
 export default async function ManageCuisinePage({
@@ -31,6 +33,13 @@ export default async function ManageCuisinePage({
 
   const cuisines = await getAllCuisines(queryParams);
 
+  const sortOptions: SortOption[] = [
+    { label: "Name (A → Z)", value: "name-asc" },
+    { label: "Name (Z → A)", value: "name-desc" },
+    { label: "Oldest first", value: "createdAt-asc" },
+    { label: "Newest first", value: "createdAt-desc" },
+  ];
+
   return (
     <div className="max-w-360 w-full mx-auto">
       <div className="mb-8 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
@@ -53,7 +62,19 @@ export default async function ManageCuisinePage({
           <CreateCuisineModal />
         </Dialog>
       </div>
-      <Searching placeholder="Search cuisine name..." />
+      <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6">
+        <Searching placeholder="Search category name..." />
+
+        <ReusableSorting
+          options={sortOptions}
+          defaultValue={
+            params.sortBy && params.sortOrder
+              ? `${params.sortBy}-${params.sortOrder}`
+              : undefined
+          }
+          className="w-full sm:w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition cursor-pointer"
+        />
+      </div>
       <CuisineTable cuisines={cuisines.data} meta={cuisines.meta} />
     </div>
   );

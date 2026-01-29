@@ -4,10 +4,23 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import PaginationComponent from "@/components/shared/PaginationComponent";
 import Searching from "@/components/shared/Searching";
+import { SortOption } from "@/types";
+import ReusableSorting from "@/components/shared/ReusableSorting";
 
 export default async function CookingHistoryPage() {
   const cookingHistory = await getMyCookingHistory();
   const historyList = cookingHistory?.data || [];
+
+  const historySortOptions: SortOption[] = [
+    { label: "Most Recent", value: "cookedDate-desc" },
+    { label: "Oldest History", value: "cookedDate-asc" },
+    { label: "Recipe Name (A → Z)", value: "recipeId.name-asc" },
+    { label: "Recipe Name (Z → A)", value: "recipeId.name-desc" },
+    { label: "Fastest Recipes", value: "recipeId.cookingTime-asc" },
+    { label: "Slowest Recipes", value: "recipeId.cookingTime-desc" },
+    { label: "Calories (Low to High)", value: "recipeId.calories-asc" },
+    { label: "Calories (High to Low)", value: "recipeId.calories-desc" },
+  ];
 
   return (
     <div className="min-h-screen p-8">
@@ -97,7 +110,13 @@ export default async function CookingHistoryPage() {
 
               return (
                 <div key={history._id}>
-                  <Searching placeholder="Search recipe name category or cuisine..." />
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 mb-6">
+                    <Searching placeholder="Search recipe name category or cuisine..." />
+                    <ReusableSorting
+                      options={historySortOptions}
+                      className="w-full sm:w-48 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 focus:border-blue-400 transition cursor-pointer"
+                    />
+                  </div>
                   <div
                     key={history._id}
                     className="relative pl-8 pb-8 border-l-2 border-orange-300 last:border-l-0"
