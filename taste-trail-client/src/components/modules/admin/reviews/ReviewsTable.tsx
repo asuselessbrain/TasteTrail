@@ -9,7 +9,6 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { CheckCircle, XCircle, Clock, Star } from "lucide-react";
-import Link from "next/link";
 import ReviewAction from "./ReviewAction";
 import { IMeta } from "@/types";
 import PaginationComponent from "@/components/shared/PaginationComponent";
@@ -113,7 +112,6 @@ export default function ReviewsTable({ reviews, meta }: ReviewsTableProps) {
                   key={review._id}
                   className="border-b border-gray-200 transition-colors hover:bg-gray-50"
                 >
-                  {/* User */}
                   <TableCell>
                     <div>
                       <p className="font-semibold text-gray-900">
@@ -125,15 +123,12 @@ export default function ReviewsTable({ reviews, meta }: ReviewsTableProps) {
                     </div>
                   </TableCell>
 
-                  {/* Recipe */}
                   <TableCell className="font-medium text-gray-900">
                     {review.recipeId?.name || "Deleted Recipe"}
                   </TableCell>
 
-                  {/* Rating */}
                   <TableCell>{getRatingStars(review.rating)}</TableCell>
 
-                  {/* Comment */}
                   <TableCell className="max-w-xs">
                     <p
                       className="text-gray-700 text-sm line-clamp-2"
@@ -143,10 +138,8 @@ export default function ReviewsTable({ reviews, meta }: ReviewsTableProps) {
                     </p>
                   </TableCell>
 
-                  {/* Status */}
                   <TableCell>{getStatusBadge(review.status)}</TableCell>
 
-                  {/* Actions */}
                   <TableCell className="text-right">
                     <ReviewAction review={review} />
                   </TableCell>

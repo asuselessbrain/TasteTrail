@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import GroceryCard from "@/components/modules/user/grocery/GroceryCard";
 import { generateGroceryList } from "@/services/groceryService";
-import { Download } from "lucide-react";
 import DownloadButton from "@/components/modules/user/grocery/DownloadButton";
 
 interface GroceryItem {
@@ -50,7 +49,6 @@ export default async function GenerateGroceryListPage() {
           </div>
         ) : (
           <>
-            {/* Stats */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
               <div className="bg-white rounded-lg shadow-md p-6">
                 <p className="text-sm text-gray-600">Total Items</p>
@@ -72,7 +70,6 @@ export default async function GenerateGroceryListPage() {
               </div>
             </div>
 
-            {/* Progress Bar */}
             <div className="bg-white rounded-lg shadow-md p-6 mb-8">
               <div className="flex justify-between items-center mb-2">
                 <p className="text-sm font-medium text-gray-700">
@@ -92,27 +89,7 @@ export default async function GenerateGroceryListPage() {
               </div>
             </div>
 
-            {/* Action Buttons */}
-            {/* <div className="flex gap-3 mb-8">
-              <Button
-                // onClick={handleSelectAll}
-                className="flex-1 bg-blue-500 hover:bg-blue-600"
-              >
-                {groceryList.every((item) => item.purchased)
-                  ? "Deselect All"
-                  : "Select All"}
-              </Button>
-              {purchasedCount > 0 && (
-                <Button
-                  onClick={handleClearPurchased}
-                  className="flex-1 bg-red-500 hover:bg-red-600"
-                >
-                  Clear Purchased
-                </Button>
-              )}
-            </div> */}
-
-            {/* Grocery List */}
+            
             <div className="bg-white rounded-lg shadow-md overflow-hidden">
               <div className="divide-y">
                 {groceryList.map((item: GroceryItem, index: number) => (
@@ -120,16 +97,6 @@ export default async function GenerateGroceryListPage() {
                 ))}
               </div>
             </div>
-
-            {/* Completion Message */}
-            {/* {purchasedCount === groceryList.length &&
-              groceryList.length > 0 && (
-                <div className="mt-8 bg-green-50 border-l-4 border-green-500 p-6 rounded">
-                  <p className="text-green-700 text-lg font-semibold">
-                    🎉 Great! You&apos;ve purchased all items on your list!
-                  </p>
-                </div>
-              )} */}
           </>
         )}
       </div>

@@ -56,33 +56,32 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
 
   return (
     <div className="w-full space-y-6">
-      {/* Metrics Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4">
-        <Card className="p-4 bg-gradient-to-br from-blue-50 to-blue-100">
+        <Card className="p-4 bg-linear-to-br from-blue-50 to-blue-100">
           <div className="text-sm font-medium text-gray-600">Total Users</div>
           <div className="text-3xl font-bold text-blue-600 mt-2">
             {data.stats.totalUsers}
           </div>
         </Card>
-        <Card className="p-4 bg-gradient-to-br from-green-50 to-green-100">
+        <Card className="p-4 bg-linear-to-br from-green-50 to-green-100">
           <div className="text-sm font-medium text-gray-600">Recipes</div>
           <div className="text-3xl font-bold text-green-600 mt-2">
             {data.stats.totalRecipes}
           </div>
         </Card>
-        <Card className="p-4 bg-gradient-to-br from-amber-50 to-amber-100">
+        <Card className="p-4 bg-linear-to-br from-amber-50 to-amber-100">
           <div className="text-sm font-medium text-gray-600">Categories</div>
           <div className="text-3xl font-bold text-amber-600 mt-2">
             {data.stats.totalCategory}
           </div>
         </Card>
-        <Card className="p-4 bg-gradient-to-br from-purple-50 to-purple-100">
+        <Card className="p-4 bg-linear-to-br from-purple-50 to-purple-100">
           <div className="text-sm font-medium text-gray-600">Cuisines</div>
           <div className="text-3xl font-bold text-purple-600 mt-2">
             {data.stats.totalCuisines}
           </div>
         </Card>
-        <Card className="p-4 bg-gradient-to-br from-red-50 to-red-100">
+        <Card className="p-4 bg-linear-to-br from-red-50 to-red-100">
           <div className="text-sm font-medium text-gray-600">
             Pending Review
           </div>
@@ -92,9 +91,7 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
         </Card>
       </div>
 
-      {/* Charts */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Bar Chart */}
         <Card className="p-6">
           <h3 className="text-lg font-semibold mb-4">Overview Statistics</h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -108,7 +105,6 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
           </ResponsiveContainer>
         </Card>
 
-        {/* Pie Chart */}
         <Card className="p-6">
           <h3 className="text-lg font-semibold mb-4">Content Distribution</h3>
           <ResponsiveContainer width="100%" height={300}>
@@ -138,7 +134,6 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         
-        {/* --- User Growth Chart (Area Chart) --- */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>User Growth (Last 30 Days)</CardTitle>
@@ -157,7 +152,7 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
                   <XAxis 
                     dataKey="date" 
                     tick={{ fontSize: 12 }} 
-                    tickFormatter={(value) => value.slice(5)} // শুধু MM-DD দেখাবে (যেমন: 02-14)
+                    tickFormatter={(value) => value.slice(5)}
                   />
                   <YAxis allowDecimals={false} />
                   <Tooltip 
@@ -177,7 +172,6 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
           </CardContent>
         </Card>
 
-        {/* --- Recipe Distribution Chart (Donut Pie Chart) --- */}
         <Card className="shadow-sm">
           <CardHeader>
             <CardTitle>Recipe Categories Distribution</CardTitle>
@@ -190,7 +184,7 @@ export default function DashboardMetrics({ data }: { data: DashboardData }) {
                     data={charts?.recipeDistribution || []}
                     cx="50%"
                     cy="50%"
-                    innerRadius={60} // Donut শেপের জন্য
+                    innerRadius={60}
                     outerRadius={80}
                     paddingAngle={5}
                     dataKey="value"

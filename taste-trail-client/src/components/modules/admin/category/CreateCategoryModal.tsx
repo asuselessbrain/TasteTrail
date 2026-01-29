@@ -49,7 +49,6 @@ export default function CreateCategoryModal() {
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="grid gap-4 py-2">
 
-                    {/* CATEGORY NAME */}
                     <Controller
                         name="name"
                         control={form.control}
@@ -74,7 +73,6 @@ export default function CreateCategoryModal() {
                         )}
                     />
 
-                    {/* DESCRIPTION */}
                     <Controller
                         name="description"
                         control={form.control}

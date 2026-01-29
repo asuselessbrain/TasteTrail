@@ -20,7 +20,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
             </DialogHeader>
 
             <div className="space-y-6 py-4">
-                {/* Recipe Image */}
                 {recipe.image && (
                     <div className="relative w-full h-64 rounded-lg overflow-hidden bg-gray-100">
                         <Image
@@ -32,7 +31,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
                     </div>
                 )}
 
-                {/* Category and Cuisine Info */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <p className="text-sm font-semibold text-gray-600 mb-1">Category</p>
@@ -44,7 +42,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
                     </div>
                 </div>
 
-                {/* Cooking Time and Calories */}
                 <div className="grid grid-cols-2 gap-4">
                     <div>
                         <p className="text-sm font-semibold text-gray-600 mb-1">Cooking Time</p>
@@ -56,7 +53,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
                     </div>
                 </div>
 
-                {/* Ingredients */}
                 <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Ingredients</h3>
                     <ul className="list-disc list-inside space-y-2">
@@ -72,7 +68,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
                     </ul>
                 </div>
 
-                {/* Instructions */}
                 <div>
                     <h3 className="text-lg font-semibold text-gray-900 mb-3">Instructions</h3>
                     <p className="text-gray-700 whitespace-pre-wrap leading-relaxed">
@@ -80,7 +75,6 @@ export default function ViewRecipeModal({ recipe }: ViewRecipeModalProps) {
                     </p>
                 </div>
 
-                {/* Created At */}
                 <div className="pt-4 border-t">
                     <p className="text-xs font-semibold text-gray-500 mb-1">CREATED AT</p>
                     <p className="text-gray-600">{new Date(recipe.createdAt).toLocaleDateString()} at {new Date(recipe.createdAt).toLocaleTimeString()}</p>

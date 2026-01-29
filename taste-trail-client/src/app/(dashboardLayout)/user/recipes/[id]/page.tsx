@@ -5,8 +5,6 @@ import {
   Flame,
   ChefHat,
   ArrowLeft,
-  Share2,
-  Heart,
   Star,
 } from "lucide-react";
 import Link from "next/link";
@@ -51,12 +49,9 @@ export default async function RecipeDetailsPage({
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Main Content */}
       <div className="max-w-360 mx-auto px-4 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Left Column - Image Section */}
           <div className="lg:col-span-2">
-            {/* Main Image */}
             <div className="bg-gray-100 rounded-lg overflow-hidden mb-4">
               {recipe.image ? (
                 <div className="relative h-96 md:h-125 w-full">
@@ -75,7 +70,6 @@ export default async function RecipeDetailsPage({
               )}
             </div>
 
-            {/* Tabs Navigation */}
             <div className="flex gap-4 border-b border-gray-200 mb-6">
               <button className="pb-4 font-semibold text-gray-900 border-b-2 border-orange-600">
                 Description
@@ -85,9 +79,7 @@ export default async function RecipeDetailsPage({
               </button>
             </div>
 
-            {/* Description Section */}
             <div className="space-y-6 mb-12">
-              {/* Ingredients */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">
                   Ingredients
@@ -111,7 +103,6 @@ export default async function RecipeDetailsPage({
                 </ul>
               </div>
 
-              {/* Instructions */}
               <div>
                 <h3 className="text-lg font-bold text-gray-900 mb-4">
                   Cooking Instructions
@@ -122,7 +113,6 @@ export default async function RecipeDetailsPage({
               </div>
             </div>
 
-            {/* Reviews Section */}
             <div className="border-t border-gray-200 pt-8">
               <h3 className="text-xl font-bold text-gray-900 mb-6">
                 Customer Reviews
@@ -131,12 +121,9 @@ export default async function RecipeDetailsPage({
             </div>
           </div>
 
-          {/* Right Column - Sidebar */}
           <div className="lg:col-span-1">
             <div className="sticky top-8 space-y-4">
-              {/* Recipe Info Card */}
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-6 space-y-6">
-                {/* Title and Rating */}
                 <div>
                   <h1 className="text-2xl font-bold text-gray-900 mb-3">
                     {recipe.name}
@@ -166,7 +153,6 @@ export default async function RecipeDetailsPage({
                   </div>
                 </div>
 
-                {/* Category and Cuisine */}
                 <div className="border-t border-gray-200 pt-4 flex items-center gap-6">
                   <div className="flex items-center gap-2">
                     <p className="text-xs font-bold text-gray-500 uppercase tracking-wide">
@@ -190,7 +176,6 @@ export default async function RecipeDetailsPage({
                   </div>
                 </div>
 
-                {/* Stats */}
                 <div className="border-t border-gray-200 pt-4 space-y-3">
                   <div className="flex items-start justify-between">
                     <div className="flex items-center gap-2">
@@ -214,12 +199,10 @@ export default async function RecipeDetailsPage({
                   </div>
                 </div>
 
-                {/* Action Buttons */}
                 <div className="border-t border-gray-200 pt-4 space-y-3">
                   <FavoriteAction recipeId={recipe._id} isAddedInFavorite={alreadyInFavorites.data} />
                 </div>
 
-                {/* Metadata */}
                 <div className="border-t border-gray-200 pt-4 text-xs text-gray-600 space-y-1">
                   <p>
                     Created: {new Date(recipe.createdAt).toLocaleDateString()}
@@ -231,7 +214,6 @@ export default async function RecipeDetailsPage({
                 </div>
               </div>
 
-              {/* Review Form */}
               <ReviewForm recipeId={recipe._id} />
             </div>
           </div>

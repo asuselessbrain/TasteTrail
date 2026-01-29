@@ -154,7 +154,6 @@ export default function CreateRecipeModal() {
 
       <form onSubmit={form.handleSubmit(onSubmit)}>
         <div className="grid gap-4 py-2 mb-4">
-          {/* NAME */}
           <Controller
             name="name"
             control={form.control}
@@ -167,7 +166,6 @@ export default function CreateRecipeModal() {
             )}
           />
 
-          {/* INGREDIENTS TEXTAREA */}
           <Controller
             name="ingredients"
             control={form.control}
@@ -195,7 +193,6 @@ export default function CreateRecipeModal() {
             )}
           />
 
-          {/* INSTRUCTIONS */}
           <Controller
             name="instructions"
             control={form.control}
@@ -212,7 +209,6 @@ export default function CreateRecipeModal() {
             )}
           />
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* CATEGORY SELECT */}
             <Controller
               name="categoryId"
               control={form.control}
@@ -237,7 +233,6 @@ export default function CreateRecipeModal() {
               )}
             />
 
-            {/* CUISINE SELECT */}
             <Controller
               name="cuisineId"
               control={form.control}
@@ -262,7 +257,6 @@ export default function CreateRecipeModal() {
               )}
             />
 
-            {/* COOKING TIME */}
             <Controller
               name="cookingTime"
               control={form.control}
@@ -301,7 +295,6 @@ export default function CreateRecipeModal() {
               )}
             />
           </div>
-          {/* IMAGE */}
           <Controller
             name="image"
             control={form.control}
@@ -313,7 +306,7 @@ export default function CreateRecipeModal() {
                   type="file"
                   id={field.name}
                   aria-invalid={fieldState.invalid}
-                  onChange={(e) => field.onChange(e.target.files?.[0])} // pass File object
+                  onChange={(e) => field.onChange(e.target.files?.[0])} 
                 />
                 {fieldState.invalid && (
                   <FieldError errors={[fieldState.error]} />

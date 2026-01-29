@@ -18,21 +18,8 @@ interface Review {
   createdAt: string;
 }
 
-export default async function ReviewsPage({
-  searchParams,
-}: {
-  searchParams: Promise<{
-    page?: string;
-    search?: string;
-    status?: string;
-    sortBy?: string;
-    sortOrder?: "asc" | "desc";
-  }>;
-}) {
-  const params = await searchParams;
+export default async function ReviewsPage() {
 
-  const page = Number(params.page ?? 1);
-  const limit = 10;
   
   const reviews = await getAllReviews();
 
@@ -40,7 +27,6 @@ export default async function ReviewsPage({
 
   return (
     <div className="space-y-8 max-w-360 w-full mx-auto">
-      {/* Header */}
       <div>
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
           Reviews Management

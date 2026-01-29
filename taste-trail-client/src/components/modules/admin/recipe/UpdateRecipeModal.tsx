@@ -68,7 +68,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
     }, [recipe, form])
 
     const handleUpdate = async (data: FieldValues) => {
-        // If image is updated, handle Cloudinary upload
         if (data.image instanceof File) {
             const formData = new FormData()
             formData.append("file", data.image)
@@ -79,12 +78,10 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
             data.image = result.secure_url
         }
 
-        // Convert ingredients string to array
         if (typeof data.ingredients === "string") {
             data.ingredients = data.ingredients.split(",").map((i: string) => i.trim()).filter(Boolean)
         }
 
-        // Update recipe
         const res = await updateRecipe(recipe._id, data)
 
         if (res.success) {
@@ -108,7 +105,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
 
             <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-6 py-4">
 
-                {/* Name */}
                 <Controller
                     name="name"
                     control={form.control}
@@ -126,7 +122,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                     )}
                 />
 
-                {/* Ingredients */}
                 <Controller
                     name="ingredients"
                     control={form.control}
@@ -147,7 +142,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                     )}
                 />
 
-                {/* Instructions */}
                 <Controller
                     name="instructions"
                     control={form.control}
@@ -168,7 +162,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                 />
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* Category */}
                     <Controller
                         name="categoryId"
                         control={form.control}
@@ -192,7 +185,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                         )}
                     />
 
-                    {/* Cuisine */}
                     <Controller
                         name="cuisineId"
                         control={form.control}
@@ -216,7 +208,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                         )}
                     />
 
-                    {/* Cooking Time & Calories */}
                     <Controller
                         name="cookingTime"
                         control={form.control}
@@ -256,7 +247,6 @@ export default function UpdateRecipeModal({ recipe }: UpdateRecipeModalProps) {
                     />
                 </div>
 
-                {/* Image */}
                 <Controller
                     name="image"
                     control={form.control}

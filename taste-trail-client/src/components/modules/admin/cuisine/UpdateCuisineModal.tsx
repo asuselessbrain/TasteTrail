@@ -55,7 +55,6 @@ export default function UpdateCuisineModal({ cuisine }: { cuisine: ICuisine }) {
             </DialogHeader>
 
             <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-6 py-4">
-                {/* Course Code */}
                 <div className="space-y-2">
                     <Controller
                         name="name"
@@ -82,7 +81,6 @@ export default function UpdateCuisineModal({ cuisine }: { cuisine: ICuisine }) {
                     />
                 </div>
 
-                {/* Description */}
                 <div className="space-y-2">
                     <Controller
                         name="description"

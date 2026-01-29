@@ -65,12 +65,10 @@ export default function RecipeTable({
 
                   <TableCell className="text-gray-700">
                     {recipe.categoryId.name}{" "}
-                    {/* or recipe.category?.name if populated */}
                   </TableCell>
 
                   <TableCell className="text-gray-700">
                     {recipe.cuisineId.name}{" "}
-                    {/* or recipe.cuisine?.name if populated */}
                   </TableCell>
 
                   <TableCell className="text-gray-700">

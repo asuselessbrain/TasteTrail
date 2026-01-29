@@ -69,7 +69,9 @@ export default async function CookingHistoryPage() {
                   {
                     new Set(
                       historyList
-                        .map((h: ICookingHistory) => h.recipeId?.cuisineId?.name)
+                        .map(
+                          (h: ICookingHistory) => h.recipeId?.cuisineId?.name,
+                        )
                         .filter(Boolean),
                     ).size
                   }
@@ -94,7 +96,6 @@ export default async function CookingHistoryPage() {
             </div>
           </div>
         ) : (
-          /* Timeline */
           <div className="space-y-6">
             {historyList.map((history: ICookingHistory) => {
               const cookedDate = new Date(history.cookedDate);
@@ -121,13 +122,10 @@ export default async function CookingHistoryPage() {
                     key={history._id}
                     className="relative pl-8 pb-8 border-l-2 border-orange-300 last:border-l-0"
                   >
-                    {/* Timeline Dot */}
                     <div className="absolute left-0 top-0 -translate-x-1/2 w-4 h-4 bg-orange-500 rounded-full border-4 border-orange-50"></div>
 
-                    {/* Card */}
                     <div className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow overflow-hidden">
                       <div className="md:flex">
-                        {/* Recipe Image */}
                         <div className="md:w-1/3 relative h-48 md:h-auto bg-gray-200">
                           {history.recipeId?.image ? (
                             <Image
@@ -137,15 +135,13 @@ export default async function CookingHistoryPage() {
                               className="object-cover"
                             />
                           ) : (
-                            <div className="flex items-center justify-center h-full bg-gradient-to-br from-orange-200 to-amber-200">
+                            <div className="flex items-center justify-center h-full bg-linear-to-br from-orange-200 to-amber-200">
                               <span className="text-gray-400">No image</span>
                             </div>
                           )}
                         </div>
 
-                        {/* Recipe Details */}
                         <div className="md:w-2/3 p-6">
-                          {/* Date & Day */}
                           <div className="flex items-center gap-3 mb-3">
                             <span className="px-3 py-1 bg-orange-100 text-orange-700 text-sm font-medium rounded-full">
                               {history.day}
@@ -155,12 +151,10 @@ export default async function CookingHistoryPage() {
                             </span>
                           </div>
 
-                          {/* Recipe Name */}
                           <h2 className="text-2xl font-bold text-gray-900 mb-3">
                             {history.recipeId?.name}
                           </h2>
 
-                          {/* Meta Info */}
                           <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4">
                             {history.recipeId?.cookingTime && (
                               <span className="flex items-center gap-1">
@@ -174,7 +168,6 @@ export default async function CookingHistoryPage() {
                             )}
                           </div>
 
-                          {/* Category & Cuisine */}
                           <div className="flex flex-wrap gap-2 mb-4">
                             {history.recipeId?.categoryId?.name && (
                               <span className="px-3 py-1 bg-purple-100 text-purple-700 text-xs font-medium rounded-full">
@@ -188,7 +181,6 @@ export default async function CookingHistoryPage() {
                             )}
                           </div>
 
-                          {/* Action Button */}
                           <Link href={`/user/recipes/${history.recipeId?._id}`}>
                             <Button>View Recipe Details</Button>
                           </Link>

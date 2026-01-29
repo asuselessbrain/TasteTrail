@@ -5,7 +5,6 @@ import { categorySchema } from "./CreateCategoryModal"
 import { ICategory } from "@/types"
 import { DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 import { Field, FieldError, FieldLabel } from "@/components/ui/field"
-import { Code } from "lucide-react"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Button } from "@/components/ui/button"
@@ -56,7 +55,6 @@ export default function UpdateCategoryModal({ category }: { category: ICategory 
             </DialogHeader>
 
             <form onSubmit={form.handleSubmit(handleUpdate)} className="space-y-6 py-4">
-                {/* Course Code */}
                 <div className="space-y-2">
                     <Controller
                         name="name"
@@ -83,7 +81,6 @@ export default function UpdateCategoryModal({ category }: { category: ICategory 
                     />
                 </div>
 
-                {/* Description */}
                 <div className="space-y-2">
                     <Controller
                         name="description"

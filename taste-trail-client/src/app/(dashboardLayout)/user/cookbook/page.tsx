@@ -43,7 +43,6 @@ export default async function MyCookBook({
 
   return (
     <div className="max-w-7xl mx-auto w-full px-4 py-8">
-      {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">Recipes</h1>
         <p className="text-gray-600">
@@ -52,7 +51,6 @@ export default async function MyCookBook({
       </div>
 
       {myCookBookList.length > 0 ? (
-        /* Grid Layout */
         <>
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 sm:gap-6 mb-6">
             <Searching placeholder="Search recipe name category or cuisine..." />
@@ -76,7 +74,6 @@ export default async function MyCookBook({
           </div>
         </>
       ) : (
-        /* Empty State */
         <div className="flex justify-center items-center py-20">
           <div className="text-center">
             <p className="text-xl font-semibold text-gray-900 mb-2">

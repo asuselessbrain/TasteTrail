@@ -48,8 +48,6 @@ export default function CreateCuisineModal() {
 
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <div className="grid gap-4 py-2">
-
-                    {/* CATEGORY NAME */}
                     <Controller
                         name="name"
                         control={form.control}
@@ -73,8 +71,6 @@ export default function CreateCuisineModal() {
                             </Field>
                         )}
                     />
-
-                    {/* DESCRIPTION */}
                     <Controller
                         name="description"
                         control={form.control}
