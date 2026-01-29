@@ -7,6 +7,7 @@ const router = express.Router();
 
 router.post('/', auth(USER_ROLE.admin), recipeController.createRecipe);
 router.get('/', auth(USER_ROLE.admin, USER_ROLE.user), recipeController.getAllRecipes);
+router.get('/recommended', auth(USER_ROLE.admin, USER_ROLE.user), recipeController.recommendedRecipes);
 router.get('/all-recipes-for-meal-plan', auth(USER_ROLE.admin, USER_ROLE.user), recipeController.getAllRecipesForMealPlan);
 router.get('/:id', auth(USER_ROLE.admin, USER_ROLE.user), recipeController.getSingleRecipe);
 router.patch('/:id', auth(USER_ROLE.admin), recipeController.updateRecipe);

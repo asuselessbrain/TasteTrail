@@ -33,9 +33,15 @@ const getMealPlansByUser = async (email: string, weekStart: Date) => {
     throw new AppError(404, "User not found");
   }
 
+  const startOfDay = new Date(weekStart);
+  startOfDay.setHours(0, 0, 0, 0);
+
+  const endOfDay = new Date(weekStart);
+  endOfDay.setHours(23, 59, 59, 999);
+
   const mealPlans = await MealPlanner.find({
     userId: user._id,
-    weekStart,
+    weekStart: { $gte: startOfDay, $lte: endOfDay },
   }).populate("recipeId");
 
   return mealPlans;

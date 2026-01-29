@@ -65,8 +65,6 @@ export default function DayCard({
     setLoading(false);
   };
 
-  console.log(meal)
-
   return (
     <Card className="p-4">
       <h3 className="font-semibold">{day}</h3>

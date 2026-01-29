@@ -84,3 +84,17 @@ export const getAllRecipesForMealPlan = async () => {
     throw error;
   }
 };
+
+export const getRecommendedRecipes = async () => {
+  try {
+    const res = await baseApi("/recipes/recommended", {
+      method: "GET",
+      next: {
+        tags: ["recipes"],
+      },
+    });
+    return res;
+  } catch (error) {
+    throw error;
+  }
+};
