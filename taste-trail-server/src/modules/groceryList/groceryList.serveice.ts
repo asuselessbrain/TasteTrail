@@ -105,14 +105,11 @@ const generateGroceryListPDF = async (email: string) => {
 
   if (!groceryList) throw new AppError(404, "Grocery list not found");
 
-  // Create PDFDocument
   const doc = new PDFDocument({ margin: 30, size: "A4" });
 
-  // Title
   doc.fontSize(20).text("🛒 Grocery List", { align: "center" });
   doc.moveDown(1);
 
-  // Week info
   doc
     .fontSize(12)
     .text(`Week starting: ${currentWeekStart.toDateString()}`, {
@@ -120,13 +117,11 @@ const generateGroceryListPDF = async (email: string) => {
     });
   doc.moveDown(2);
 
-  // List items
   groceryList.items.forEach((item, index) => {
     const status = item.purchased ? "✅ Purchased" : "❌ Not purchased";
     doc.fontSize(14).text(`${index + 1}. ${item.name} - ${status}`);
   });
 
-  // Return PDFDocument (stream)
   return doc;
 };
 

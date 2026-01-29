@@ -32,7 +32,6 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
 
   const pipeline: any[] = [];
 
-  // ১. ফিল্টার ফিক্স (String ID কে ObjectId তে কনভার্ট করা)
   const matchQuery: any = {};
   Object.keys(filters).forEach((key) => {
     if (filters[key] && mongoose.Types.ObjectId.isValid(filters[key])) {
@@ -43,7 +42,6 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
   });
   pipeline.push({ $match: matchQuery });
 
-  // ২. পপুলেশন (Lookup) - এটি সব সময় রান করবে
   if (populate && populate.length > 0) {
     populate.forEach((path) => {
       const collectionName = populateCollectionNames[path];
@@ -52,7 +50,7 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
           {
             $lookup: {
               from: collectionName,
-              localField: path, // e.g. "recipeId" or "recipeId.categoryId"
+              localField: path,
               foreignField: "_id",
               as: path,
             },
@@ -65,7 +63,6 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
     });
   }
 
-  // ৩. সার্চ লজিক
   if (search) {
     const searchMatch: any = { $or: [] };
     searchFields.forEach((f) => {
@@ -81,10 +78,8 @@ export const queryBuilder = async <T>(model: Model<T>, options: QueryOptions) =>
     }
   }
 
-  // ৪. সর্টিং
   pipeline.push({ $sort: { [sortBy]: sortOrder === "asc" ? 1 : -1 } });
 
-  // ৫. পেজিনেশন এবং কাউন্ট
   const countPipeline = [...pipeline, { $count: "total" }];
   const countResult = await model.aggregate(countPipeline);
   const total = countResult[0]?.total || 0;

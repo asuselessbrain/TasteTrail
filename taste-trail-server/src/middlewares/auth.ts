@@ -33,7 +33,6 @@ const auth = (...requiredRoles: TUserRole[]) => {
 
     const { role, email } = decoded;
 
-    // checking if the user is exist
     const user = await User.findOne({ email });
 
     if (!user) {
