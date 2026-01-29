@@ -43,7 +43,7 @@ const recipeSchema = new Schema<IRecipe>(
     },
   },
   {
-    timestamps: true, // adds createdAt & updatedAt
+    timestamps: true,
   }
 );
 

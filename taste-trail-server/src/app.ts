@@ -10,6 +10,7 @@ import { reviewRoutes } from './modules/review/review.route';
 import { favoriteRoutes } from './modules/favorite/favorite.route';
 import { mealPlannerRoutes } from './modules/mealPlanner/mealPlanner.route';
 import { cookingHistoryRoutes } from './modules/cookedHistory/cookingHistory.route';
+import { groceryListRoutes } from './modules/groceryList/groceryList.router';
 const app = express();
 
 app.use(express.json());
@@ -24,6 +25,7 @@ app.use('/api/v1/reviews', reviewRoutes)
 app.use('/api/v1/favorites', favoriteRoutes)
 app.use('/api/v1/meal-planner', mealPlannerRoutes)
 app.use('/api/v1/cooked-history', cookingHistoryRoutes)
+app.use('/api/v1/grocery-list', groceryListRoutes);
 
 app.get('/', (req: Request, res: Response) => {
     res.json({

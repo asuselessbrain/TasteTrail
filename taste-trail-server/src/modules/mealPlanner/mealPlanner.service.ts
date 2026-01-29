@@ -77,5 +77,5 @@ const updateStatus = async (
 export const mealPlannerServices = {
   addMealPlan,
   getMealPlansByUser,
-  updateStatus,
+  updateStatus
 };

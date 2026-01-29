@@ -84,11 +84,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       icon: Clock
     },
     {
-      title: "My Reviews",
-      url: "/user/reviews",
-      icon: Star
-    },
-    {
       title: "Grocery List",
       url: "/user/grocery-list",
       icon: ShoppingCart

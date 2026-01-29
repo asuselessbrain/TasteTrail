@@ -41,8 +41,9 @@ const updateStatus = catchAsync(async (req, res) => {
   });
 });
 
+
 export const mealPlannerController = {
   addMealPlan,
   getMealPlansByUser,
-  updateStatus,
+  updateStatus
 };
