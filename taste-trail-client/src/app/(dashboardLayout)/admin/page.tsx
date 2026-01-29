@@ -1,9 +1,10 @@
 import { dashboardData } from "@/services/dashboardService";
 import DashboardMetrics from "@/components/modules/admin/DashboardMetrics";
-import React from "react";
 
 export default async function AdminDashboard() {
   const res = await dashboardData();
+
+  console.log(res)
   
   return (
     <div className="p-6">
