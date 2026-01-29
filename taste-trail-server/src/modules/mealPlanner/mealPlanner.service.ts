@@ -1,5 +1,6 @@
 import AppError from "../../errors/AppError";
 import { User } from "../auth/auth.model";
+import { CookingHistory } from "../cookedHistory/cookedHIstory.model";
 import { MealPlanner } from "./mealPlanner.model";
 import { IMealPlanner } from "./mealPlanner.type";
 
@@ -44,6 +45,21 @@ const updateStatus = async (
   id: string,
   status: "planned" | "cooking" | "cooked",
 ) => {
+  const exists = await MealPlanner.findById(id);
+
+  if (!exists) {
+    throw new AppError(404, "Meal plan not found");
+  }
+
+  if (status === "cooked" && exists.status !== "cooked") {
+    await CookingHistory.create({
+      userId: exists.userId,
+      recipeId: exists.recipeId,
+      cookedDate: new Date(),
+      weekStart: new Date(exists.weekStart),
+      day: exists.day,
+    });
+  }
   const mealPlan = await MealPlanner.findByIdAndUpdate(
     id,
     { status },
